@@ -2,6 +2,7 @@ import {useState} from "react"
 import {firebase} from "./lib/firebase"
 import './App.css'
 
+// if you forgot to import "firebase/firestore" in /lib/firebase.js, you will get an error: firebase.firestore is not a function
 
 function App() {
   const [fileUrl, setFileUrl] = useState(null)
@@ -26,10 +27,22 @@ function App() {
   }
 
   console.log(fileUrl)
-  // after we're put our file to the firebase Storage, we need to get a URL to this file.
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    // create reference to the Firestore database
+    const db = firebase.firestore()
+    // get username from the input
+    const username = event.target.username.value
+    ////////////////////////////////////////////////////
+    // if username is true (not empty), proceed to console.log(username)
+    username && console.log(username)
+    ////////////////////////////////////////////////////
+    // IF username is not empty, then(&&===then), add a new document in collection "users"
+    username && db.collection("users").doc(username).set({
+      name: username,
+      avatar: fileUrl
+    })
   }
   
   return (
@@ -51,7 +64,7 @@ function App() {
         />
 
         <button 
-          type="button"
+          type="submit"
           >
             Submit
           </button>
