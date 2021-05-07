@@ -1,78 +1,18 @@
-import {useState} from "react"
-import {firebase} from "./lib/firebase"
-import './App.css'
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
+import * as ROUTES from "./constants/routes"
+import "./styles/App.css"
 
-// if you forgot to import "firebase/firestore" in /lib/firebase.js, you will get an error: firebase.firestore is not a function
+import BasicFileUpload from "./pages/basic-file-upload"
 
-function App() {
-  const [fileUrl, setFileUrl] = useState(null)
-
-  // https://firebase.google.com/docs/storage/web/create-reference?authuser=0
-  // https://firebase.google.com/docs/storage/web/upload-files?authuser=0
-  const handleFileUpload = async (event) => {
-      // get file object from the file input
-      const file = event.target.files[0]
-      // create reference to the storage service, which is used to create references in your storage bucket
-      const storage = firebase.storage()
-      // create storage reference from our storage service
-      const storageRef = storage.ref()
-      // create child reference
-      const fileReference = storageRef.child(file.name)
-      // upload our file from our form input to the firebase Storage
-      await fileReference.put(file)
-      // after we're uploaded our file to the firebase Storage, we need to get an URL to this file. We will need this fileUrl later, when we will be creating user record with the username and avatar. We need to store this url in the state. 
-      const fileUrl = await fileReference.getDownloadURL()
-      // save URL in the state
-      setFileUrl(fileUrl)
-  }
-
-  console.log(fileUrl)
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    // create reference to the Firestore database
-    const db = firebase.firestore()
-    // get username from the input
-    const username = event.target.username.value
-    ////////////////////////////////////////////////////
-    // if username is true (not empty), proceed to console.log(username)
-    username && console.log(username)
-    ////////////////////////////////////////////////////
-    // IF username is not empty, then(&&===then), add a new document in collection "users"
-    username && db.collection("users").doc(username).set({
-      name: username,
-      avatar: fileUrl
-    })
-  }
+const App = () => {
   
-  return (
-    <div className="App">
-      hello {" "}
-
-      <form onSubmit={handleSubmit}>
-        {/* file upload */}
-        <input 
-          type="file" 
-          onChange={handleFileUpload}
-        />
-
-        {/* username input */}
-        <input
-          type="text"
-          name="username"
-          placeholder="type in your username"
-        />
-
-        <button 
-          type="submit"
-          >
-            Submit
-          </button>
-      </form>
-      
-
-    </div>
-  );
+  return(
+    <Router>
+      <Switch>
+        <Route path={ROUTES.BASICFILEUPLOAD} component={BasicFileUpload} />
+      </Switch>
+    </Router>
+  )
 }
 
 export default App;

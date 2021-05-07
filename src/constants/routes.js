@@ -1,0 +1,1 @@
+export const BASICFILEUPLOAD = "/basic-file-upload"
