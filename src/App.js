@@ -3,6 +3,7 @@ import * as ROUTES from "./constants/routes"
 import "./styles/App.css"
 
 import Home from "./pages/home"
+import Signup from "./pages/signup"
 import BasicFileUpload from "./pages/basic-file-upload"
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
     <Router>
       <Switch>
         <Route path={ROUTES.HOME} component ={Home} exact />
+        <Route path={ROUTES.SIGNUP} component={Signup} />
         <Route path={ROUTES.BASICFILEUPLOAD} component={BasicFileUpload} />
       </Switch>
     </Router>

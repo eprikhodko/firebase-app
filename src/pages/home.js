@@ -4,9 +4,14 @@ import "../styles/App.css"
 
 const Home = () => {
     return(
-        <Link to={ROUTES.BASICFILEUPLOAD} aria-label="Home">
-            <p>Basic file upload example</p>
-        </Link>
+        <div className="home-page-links">
+            <Link to={ROUTES.SIGNUP} aria-label="Sign-up">
+                <p>Sign-up page</p>
+            </Link>
+            <Link to={ROUTES.BASICFILEUPLOAD} aria-label="Home">
+                <p>Basic file upload example</p>
+            </Link>
+        </div>  
     )
 }
 
