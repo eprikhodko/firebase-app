@@ -115,9 +115,9 @@ const SignUp = () => {
             <div className="container-login container-signup">
                 <p>
                     Have an account?{" "}
-                    {/* <Link to={ROUTES.LOGIN} className="font-bold link link-signup"> */}
+                    <Link to={ROUTES.LOGIN} className="font-bold link link-signup">
                         Log in
-                    {/* </Link> */}
+                    </Link>
                 </p>
             </div>
         </div> 

@@ -8,7 +8,7 @@ const Home = () => {
             <Link to={ROUTES.SIGNUP} aria-label="Sign-up">
                 <p>Sign-up page</p>
             </Link>
-            <Link to={ROUTES.BASICFILEUPLOAD} aria-label="Home">
+            <Link to={ROUTES.BASIC_FILE_UPLOAD} aria-label="Home">
                 <p>Basic file upload example</p>
             </Link>
         </div>  
