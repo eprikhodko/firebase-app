@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react"
-import {firebase} from "../lib/firebase"
+import React, {useEffect, useState, useContext} from "react"
+import FirebaseContext from "../context/firebase"
 import {Link} from "react-router-dom"
 import * as ROUTES from "../constants/routes"
 // import {doesUsernameExist} from "../services/firebase"
@@ -10,6 +10,9 @@ const SignUp = () => {
     useEffect(() => {
         document.title = "Sign up - Instagram"
     },[])
+
+    const {firebase} = useContext(FirebaseContext)
+    console.log(firebase)
 
     const [username, setUsername] = useState("")
     const [fullname, setFullname] = useState("")
@@ -22,7 +25,6 @@ const SignUp = () => {
 
     const handleSignUp = async (event) => {
         event.preventDefault()
-
             try {
                 const createdUserResult = await firebase
                     .auth()
