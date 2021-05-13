@@ -6,7 +6,8 @@ import Firebase from "firebase/app"
 // import {seedDatabase} from "../seed"
 
 // Add the Firebase products that you want to use
-// import "firebase/auth"
+// if we don't import "firebase/auth, we will get an error when we try to call firebase.auth(), -> firebase.auth is not a function
+import "firebase/auth"
 import "firebase/firestore"
 import "firebase/storage"
 
