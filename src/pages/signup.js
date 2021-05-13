@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from "react"
 import FirebaseContext from "../context/firebase"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import * as ROUTES from "../constants/routes"
 // import {doesUsernameExist} from "../services/firebase"
 import "../styles/signup.css"
@@ -11,6 +11,7 @@ const SignUp = () => {
         document.title = "Sign up - Instagram"
     },[])
 
+    const history = useHistory()
     const {firebase} = useContext(FirebaseContext)
 
     const [email, setEmail] = useState("")
@@ -25,6 +26,9 @@ const SignUp = () => {
                 const createUser = await firebase
                     .auth()
                     .createUserWithEmailAndPassword(email, password)
+
+                // redirect user after creating new user
+                history.push(ROUTES.HOME)
      
              } catch (error) {
                  setEmail("")
