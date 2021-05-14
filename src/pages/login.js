@@ -27,8 +27,8 @@ const Login = () => {
 
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password)
-            // redirect user to the Dasboard in case of successful login
-            // history.push(ROUTES.DASHBOARD)
+            // redirect user to the home page in case of successful login
+            history.push(ROUTES.HOME)
         } catch (error){
             setEmail("")
             setPassword("")
