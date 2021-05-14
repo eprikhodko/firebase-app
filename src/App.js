@@ -2,12 +2,16 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import * as ROUTES from "./constants/routes"
 import "./styles/App.css"
 
+import UserContext from "./context/user"
+
 import Home from "./pages/home"
 import Login from "./pages/login"
 import Signup from "./pages/signup"
 import BasicFileUpload from "./pages/basic-file-upload"
 
 const App = () => {
+
+  
   
   return(
     <Router>
