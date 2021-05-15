@@ -10,17 +10,8 @@ const Header = () => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
     const user = useContext(UserContext)
-    // const user = firebase.auth().currentUser
-    // const user = null
-    // console.log(firebase.auth().currentUser)
-    firebase.auth().onAuthStateChanged(user => {
-            // console.log(user)
-        })
+    console.log(user)
     
-    
-
-    
-
     return (
         <header>
             <div className="container-header">
