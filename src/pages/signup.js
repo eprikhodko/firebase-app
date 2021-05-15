@@ -23,10 +23,11 @@ const SignUp = () => {
     const handleSignUp = async (event) => {
         event.preventDefault()
             try {
-                const createUser = await firebase
+                const createdUser = await firebase
                     .auth()
                     .createUserWithEmailAndPassword(email, password)
 
+                    console.log(createdUser.user)
                 // redirect user after creating new user
                 history.push(ROUTES.HOME)
      

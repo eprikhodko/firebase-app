@@ -9,7 +9,17 @@ import "../styles/Header.css"
 const Header = () => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
-    const user = null
+    const user = useContext(UserContext)
+    // const user = firebase.auth().currentUser
+    // const user = null
+    // console.log(firebase.auth().currentUser)
+    firebase.auth().onAuthStateChanged(user => {
+            // console.log(user)
+        })
+    
+    
+
+    
 
     return (
         <header>
@@ -25,19 +35,24 @@ const Header = () => {
                                     if (event.key === "Enter") {
                                         firebase.auth().signOut()
                                     }
-                                }}
-                            />
+                            }}> 
+                                Sign Out 
+                            </button>
 
                             <Link to={`/p/${user.displayName}`} className="link-profile">
-                                <img
-                                    className="avatar-header"
-                                    src={`/images/avatars/${user.displayName}.jpg`}
-                                    alt={`${user.displayName} profile avatar`}
-                                />
+                            
                             </Link>
                         </>
                     ):(
                         < >
+                            <Link to={ROUTES.HOME}>
+                                <button
+                                    type="button"
+                                    className="container-buttons__button-home"
+                                >
+                                    Home
+                                </button>
+                            </Link>
                             <Link to={ROUTES.LOGIN}>
                                 <button 
                                     type="button"

@@ -35,10 +35,10 @@ const BasicFileUpload = () => {
     // get username from the input
     const username = event.target.username.value
     ////////////////////////////////////////////////////
-    // if username is true (not empty), proceed to console.log(username)
+    // if username is true (not empty), then console.log(username)
     username && console.log(username)
     ////////////////////////////////////////////////////
-    // IF username is not empty, then(&&===then), add a new document in collection "users"
+    // if username is not empty, then(&& === then) add a new document in collection "users"
     username && db.collection("users").doc(username).set({
       name: username,
       avatar: fileUrl

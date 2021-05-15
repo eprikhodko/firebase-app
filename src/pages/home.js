@@ -6,7 +6,7 @@ import Header from "../components/Header"
 
 const Home = () => {
     return(
-        <div className="container-home">
+        <div>
             <Header />
             <Link to={ROUTES.SIGNUP} aria-label="Sign-up">
                 <p>Sign-up page</p>

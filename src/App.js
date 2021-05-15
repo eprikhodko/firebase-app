@@ -8,20 +8,25 @@ import Home from "./pages/home"
 import Login from "./pages/login"
 import Signup from "./pages/signup"
 import BasicFileUpload from "./pages/basic-file-upload"
+import useAuthListener from "./hooks/useAuthListener"
 
 const App = () => {
 
-  
+  const user = useAuthListener()
+  console.log(user)
   
   return(
-    <Router>
-      <Switch>
-        <Route path={ROUTES.HOME} component ={Home} exact />
-        <Route path={ROUTES.LOGIN} component={Login} />
-        <Route path={ROUTES.SIGNUP} component={Signup} />
-        <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
-      </Switch>
-    </Router>
+    <UserContext.Provider value = {user}>
+      <Router>
+            <Switch>
+              <Route path={ROUTES.HOME} component ={Home} exact />
+              <Route path={ROUTES.LOGIN} component={Login} />
+              <Route path={ROUTES.SIGNUP} component={Signup} />
+              <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
+            </Switch>
+      </Router>
+    </UserContext.Provider>
+    
   )
 }
 

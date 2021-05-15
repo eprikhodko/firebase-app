@@ -25,7 +25,7 @@ header {
     align-items: center;
 }
 
-.container-buttons__button-login {
+.container-buttons__button-login, .container-buttons__button-home {
     width: 6em;
     height: 2.2em;
     padding: 0;

@@ -5,6 +5,8 @@ import {Link, useHistory} from "react-router-dom"
 import * as ROUTES from "../constants/routes"
 import "../styles/login.css"
 
+import Header from "../components/Header"
+
 const Login = () => {
 
     // set page title
@@ -37,6 +39,9 @@ const Login = () => {
     }
 
     return (
+        <>
+                    <Header />
+
         <div className="container">
             <div className="container-login">
                 {error && <p className="paragraph-error">
@@ -80,6 +85,7 @@ const Login = () => {
                 </p>
             </div>
         </div> 
+        </>
     )
 }
 
