@@ -12,10 +12,10 @@ import useAuthListener from "./hooks/useAuthListener"
 
 const App = () => {
 
-  const user = useAuthListener()
+  const currentUser = useAuthListener()
   
   return(
-    <UserContext.Provider value = {user}>
+    <UserContext.Provider value = {currentUser}>
       <Router>
             <Switch>
               <Route path={ROUTES.HOME} component ={Home} exact />

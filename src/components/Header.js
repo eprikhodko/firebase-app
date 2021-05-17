@@ -9,14 +9,14 @@ import "../styles/Header.css"
 const Header = () => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
-    const user = useContext(UserContext)
-    console.log(user)
+    const currentUser = useContext(UserContext)
+    console.log(currentUser)
     
     return (
         <header>
             <div className="container-header">
                 <div className="container-buttons">
-                    {user ? (
+                    {currentUser ? (
                         < >
                             <button 
                                 width="22px"
@@ -30,7 +30,7 @@ const Header = () => {
                                 Sign Out 
                             </button>
 
-                            <Link to={`/p/${user.displayName}`} className="link-profile">
+                            <Link to={`/p/${currentUser.displayName}`} className="link-profile">
                             
                             </Link>
                         </>

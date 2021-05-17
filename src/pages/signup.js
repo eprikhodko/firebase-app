@@ -8,17 +8,18 @@ import "../styles/signup.css"
 const SignUp = () => {
     // set page title
     useEffect(() => {
-        document.title = "Sign up - Instagram"
+        document.title = "Sign up"
     },[])
 
     const history = useHistory()
     const {firebase} = useContext(FirebaseContext)
 
+    const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const [error, setError] = useState("")
-    const isInvalid = email === "" || password === "" || password.length < 6
+    const isInvalid = username ==="" || email === "" || password === "" || password.length < 6
 
     const handleSignUp = async (event) => {
         event.preventDefault()
@@ -32,15 +33,22 @@ const SignUp = () => {
                 history.push(ROUTES.HOME)
      
              } catch (error) {
+                 setUsername("")
                  setEmail("")
                  setPassword("")
                  setError(error.message)
              }
     }
 
+    const handleUsernameChange = (event) => {
+        // return value only matching ("^[a-z0-9]*$")
+        // if we will add a space inside of brackets, like this: ("^[a-z0-9 ]*$"), we will be able to include spaces in a string. This is called Regular expressions, check MDN docs for reference
+        event.target.value.match("^[a-z0-9]*$")!=null && setUsername(event.target.value.toLowerCase())
+    }
+
     return (
         <div className="container">
-            <div className="container-login">
+            <div className="container-signup">
                 {error && <p className="paragraph-error">
                     {error} 
                     <br/>
@@ -49,8 +57,16 @@ const SignUp = () => {
                 </p>}
                 <form method="POST" className="container-form" onSubmit={handleSignUp}>
                     <input 
+                        aria-label="Enter your username"
+                        className="container-signup__input"
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={handleUsernameChange}
+                    />
+                    <input 
                         aria-label="Enter your email address"
-                        className="input-login"
+                        className="container-signup__input"
                         type="text"
                         placeholder="Email address"
                         value={email}
@@ -58,9 +74,9 @@ const SignUp = () => {
                     />
                     <input 
                         aria-label="Enter your password"
-                        className="input-login"
+                        className="container-signup__input"
                         type="password"
-                        placeholder="Password"
+                        placeholder="Password, at least 6 characters"
                         value={password}
                         onChange={(event) => setPassword(event.target.value)}
                     />
