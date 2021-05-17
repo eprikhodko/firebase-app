@@ -4,10 +4,13 @@ import "./styles/App.css"
 
 import UserContext from "./context/user"
 
+// pages
 import Home from "./pages/home"
 import Login from "./pages/login"
 import Signup from "./pages/signup"
 import BasicFileUpload from "./pages/basic-file-upload"
+import Upload from "./pages/upload"
+
 import useAuthListener from "./hooks/useAuthListener"
 
 const App = () => {
@@ -22,6 +25,7 @@ const App = () => {
               <Route path={ROUTES.LOGIN} component={Login} />
               <Route path={ROUTES.SIGNUP} component={Signup} />
               <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
+              <Route path={ROUTES.UPLOAD} component={Upload}/>
             </Switch>
       </Router>
     </UserContext.Provider>

@@ -10,7 +10,7 @@ const Header = () => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
     const currentUser = useContext(UserContext)
-    console.log(currentUser)
+    // console.log(currentUser)
     
     return (
         <header>
@@ -18,8 +18,26 @@ const Header = () => {
                 <div className="container-buttons">
                     {currentUser ? (
                         < >
+                             <Link to={ROUTES.HOME}>
+                                <button
+                                    type="button"
+                                    className="container-buttons__button-home"
+                                >
+                                    Home
+                                </button>
+                            </Link>
+
+                            <Link to={ROUTES.UPLOAD}>
+                                <button
+                                    type="button"
+                                    className=""
+                                >
+                                    Upload
+                                </button>
+                            </Link>
+                             
+
                             <button 
-                                width="22px"
                                 type="button"
                                 onClick={() => firebase.auth().signOut()}
                                 onKeyDown={(event) => {
@@ -29,10 +47,6 @@ const Header = () => {
                             }}> 
                                 Sign Out 
                             </button>
-
-                            <Link to={`/p/${currentUser.displayName}`} className="link-profile">
-                            
-                            </Link>
                         </>
                     ):(
                         < >
