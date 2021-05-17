@@ -13,6 +13,7 @@ const SignUp = () => {
 
     const history = useHistory()
     const {firebase} = useContext(FirebaseContext)
+    const db = firebase.firestore()
 
     const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
@@ -29,6 +30,20 @@ const SignUp = () => {
                     .createUserWithEmailAndPassword(email, password)
 
                     console.log(createdUser.user)
+
+                // update user profile in firebase Authenication 
+                await createdUser.user.updateProfile({
+                    displayName: username
+                })
+
+                // create a new user document in FireStore "users" collection
+                await db.collection("users").add({
+                    userId: createdUser.user.uid,
+                    username: username.toLowerCase(),
+                    email: email.toLowerCase(),
+                    dateCreated: Date.now()
+                })
+
                 // redirect user after creating new user
                 history.push(ROUTES.HOME)
      
