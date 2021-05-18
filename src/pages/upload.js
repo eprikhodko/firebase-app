@@ -77,7 +77,7 @@ const Upload = () => {
 
   },[])
 
-  console.log(albumsCollection)
+//   console.log(albumsCollection)
   
   
   return (

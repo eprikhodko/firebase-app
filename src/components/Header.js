@@ -15,6 +15,9 @@ const Header = () => {
     return (
         <header>
             <div className="container-header">
+                <Link to={ROUTES.HOME} aria-label="Home">
+                    
+                </Link>
                 <div className="container-buttons">
                     {currentUser ? (
                         < >
