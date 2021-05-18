@@ -142,7 +142,7 @@ const Upload = () => {
             />
 
             <input 
-              type="text"
+              type="number"
               name="year"
               placeholder="Year"
               value={year}
