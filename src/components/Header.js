@@ -16,20 +16,16 @@ const Header = () => {
         <header>
             <div className="container-header">
                 <Link to={ROUTES.HOME} aria-label="Home">
-                    
+                    <img 
+                        className="container-header__logo" 
+                        src="./images/logo-music-database-theme-dark.png"
+                        alt="Music Database logo"
+                        width="150px"
+                    />
                 </Link>
                 <div className="container-buttons">
                     {currentUser ? (
                         < >
-                             <Link to={ROUTES.HOME}>
-                                <button
-                                    type="button"
-                                    className="container-buttons__button-home"
-                                >
-                                    Home
-                                </button>
-                            </Link>
-
                             <Link to={ROUTES.UPLOAD}>
                                 <button
                                     type="button"
@@ -53,14 +49,6 @@ const Header = () => {
                         </>
                     ):(
                         < >
-                            <Link to={ROUTES.HOME}>
-                                <button
-                                    type="button"
-                                    className="container-buttons__button-home"
-                                >
-                                    Home
-                                </button>
-                            </Link>
                             <Link to={ROUTES.LOGIN}>
                                 <button 
                                     type="button"
@@ -78,7 +66,7 @@ const Header = () => {
                                         Sign Up
                                 </button>
                            </Link>
-                    </>
+                        </>
                     )}
                     
                 </div>

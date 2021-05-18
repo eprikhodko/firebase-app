@@ -9,15 +9,11 @@ const Home = () => {
     return(
         <div>
             <Header />
-            <Link to={ROUTES.SIGNUP} aria-label="Sign-up">
-                <p>Sign-up page</p>
-            </Link>
-            <Link to={ROUTES.BASIC_FILE_UPLOAD} aria-label="Home">
-                <p>Basic file upload example</p>
-            </Link>
-
             <UploadedAlbums />
 
+            {/* <Link to={ROUTES.BASIC_FILE_UPLOAD} aria-label="Home">
+                <p>Basic file upload example</p>
+            </Link> */}
         </div>  
     )
 }

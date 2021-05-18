@@ -35,7 +35,7 @@ const Upload = () => {
       setFileUrl(fileUrl)
   }
 
-//   console.log(fileUrl)
+  console.log(fileUrl)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -83,8 +83,6 @@ const Upload = () => {
   return (
     <div>
         <Header />
-        <p>this is basic file upload to FireStorage example</p>
-
         <form onSubmit={handleSubmit}>
             {/* file upload */}
             <input 

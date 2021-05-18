@@ -1,0 +1,26 @@
+ .container-main {
+    max-width: 975px;
+    margin: 0 auto;
+    margin-top: 2em;
+
+    /* border: 1px solid gray; */
+ }
+ 
+ .container-albums {
+    max-width: 650px;
+    margin: 0 auto;
+    /* border: 1px solid coral; */
+
+    display: grid;
+    grid-template-columns: 200px 200px 200px;
+    grid-gap: 1em;
+}
+
+.container-albums__album {
+    /* border: 1px solid; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

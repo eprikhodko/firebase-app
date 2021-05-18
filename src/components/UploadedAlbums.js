@@ -1,6 +1,7 @@
 import {useState, useEffect, useContext} from "react"
 import FirebaseContext from "../context/firebase"
 
+import "../styles/UploadedAlbums.css"
 
 const UploadedAlbums = () => {
 
@@ -27,23 +28,26 @@ const UploadedAlbums = () => {
       console.log(albumsCollection)
 
     return(
-        <div className="container-albums">
-            {albumsCollection.map(album => {
-                return <div 
-                            key={album.albumTitle} 
-                            className="container-albums__album">
+        <div className="container-main">
+            <div className="container-albums">
+                {albumsCollection.map(album => {
+                    return <div 
+                                key={album.albumTitle} 
+                                className="container-albums__album"
+                            >
+                                <img 
+                                    width="150px"
+                                    src={album.albumCover} 
+                                    alt={album.albumTitle}
+                                />
 
-                            <img 
-                                width="150px"
-                                src={album.albumCover} 
-                                alt={album.albumTitle}
-                            />
+                                <p>{album.albumTitle}</p>
 
-                            <p>{album.albumTitle}</p>
-
-                       </div>
-            })}
+                        </div>
+                })}
+            </div>
         </div>
+       
     )
 }
 
