@@ -9,14 +9,14 @@ import "../styles/upload.css"
 const Upload = () => {
     const [fileUrl, setFileUrl] = useState(null)
     const [albumsCollection, setAlbumsCollection] = useState([])
-    const [albumTitle, setAlbumTitle] = useState("")
-
-    const [state, setState] = useState({
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [albumInfo, setAlbumInfo] = useState({
+      albumTitle: "",
       artist: "",
       year: ""
     })
 
-    const {artist, year} = state
+    const {albumTitle, artist, year} = albumInfo
 
     // create reference to the Firestore database
     const db = firebase.firestore()
@@ -57,46 +57,60 @@ const Upload = () => {
     albumTitle && await db.collection("albums").add({
         albumTitle: albumTitle,
         artist: artist,
-        year: state.year,
+        year: year,
         albumCover: fileUrl,
         uploadedBy: currentUser.uid,
         dateCreated: Date.now()
     })
 
     
-    setAlbumTitle("")
+    setAlbumInfo({
+      albumTitle: "",
+      artist: "",
+      year: ""
+    })
+
+    setFileUrl(null)
+    albumTitle && setIsSubmitted(true)
       
     // albumTitle && db.collection("albums").doc(albumTitle).set({
     //     name: albumTitle,
     //     albumCover: fileUrl
     // })
 
-    albumTitle && console.log("file uploaded")
+    fileUrl && console.log("file uploaded")
+
+    
     
   }
 
+  
+
   useEffect(() => {
-    const fetchAlbumCovers = async() => {
+    const fetchAlbumItems = async() => {
         const albumsCollection = await db.collection("albums").get()
         setAlbumsCollection(albumsCollection.docs.map(doc => {
             return doc.data()
         }))
     }
 
-    fetchAlbumCovers()
+    fetchAlbumItems()
 
-  },[])
+  },[isSubmitted])
+
+  console.log(isSubmitted)
 
   const handleChange = (event) => {
     const {name, value} = event.target
-    setState({
-      ...state,
+    setAlbumInfo({
+      ...albumInfo,
       [name]: value
     })
   }
 
+  console.log(albumTitle)
   console.log(artist)
-  console.log(state.year)
+  console.log(albumInfo.year)
 
 //   console.log(albumsCollection)
   
@@ -107,22 +121,23 @@ const Upload = () => {
         <form onSubmit={handleSubmit} className="form-upload">
             {/* file upload */}
             <input 
-              type="file" 
+              type="file"
               onChange={handleFileUpload}
             />
 
             <input
               type="text"
-              name="Album title"
+              name="albumTitle"
               placeholder="Album title"
-              onChange={(event) => setAlbumTitle(event.target.value)}
+              value={albumTitle}
+              onChange={handleChange}
             />
 
             <input 
               type="text"
               name="artist"
               placeholder="Artist"
-              value={state.artist}
+              value={artist}
               onChange={handleChange}
             />
 
@@ -130,7 +145,7 @@ const Upload = () => {
               type="text"
               name="year"
               placeholder="Year"
-              value={state.year}
+              value={year}
               onChange={handleChange}
             />
 
