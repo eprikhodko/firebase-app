@@ -88,10 +88,10 @@ const Upload = () => {
   },[])
 
   const handleChange = (event) => {
-    const value = event.target.value
+    const {name, value} = event.target
     setState({
       ...state,
-      [event.target.name]: value
+      [name]: value
     })
   }
 
