@@ -1,4 +1,4 @@
-import {useContext, useState} from "react"
+import {useContext, useEffect, useState} from "react"
 import {firebase} from "../lib/firebase"
 
 import UserContext from "../context/user"
@@ -7,10 +7,14 @@ import Header from "../components/Header"
 
 const Upload = () => {
     const [fileUrl, setFileUrl] = useState(null)
+    const [albumsCollection, setAlbumsCollection] = useState([])
     const [albumTitle, setAlbumTitle] = useState("")
 
+    // create reference to the Firestore database
+    const db = firebase.firestore()
+
     const currentUser = useContext(UserContext)
-    console.log(currentUser)
+    // console.log(currentUser)
 
   // https://firebase.google.com/docs/storage/web/create-reference?authuser=0
   // https://firebase.google.com/docs/storage/web/upload-files?authuser=0
@@ -23,7 +27,7 @@ const Upload = () => {
       const storageRef = storage.ref()
       // create child reference
       const fileReference = storageRef.child(file.name)
-      // upload our file from our form input to the firebase Storage
+      // upload file from form input to the firebase Storage
       await fileReference.put(file)
       // after we're uploaded our file to the firebase Storage, we need to get an URL to this file. We will need this fileUrl later, when we will be creating user record with the username and avatar. We need to store this url in the state. 
       const fileUrl = await fileReference.getDownloadURL()
@@ -31,12 +35,11 @@ const Upload = () => {
       setFileUrl(fileUrl)
   }
 
-  console.log(fileUrl)
+//   console.log(fileUrl)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    // create reference to the Firestore database
-    const db = firebase.firestore()
+    
     ////////////////////////////////////////////////////
     // if username is not empty, then(&& === then) add a new document in collection "users"
 
@@ -61,6 +64,21 @@ const Upload = () => {
     albumTitle && console.log("file uploaded")
     
   }
+
+  useEffect(() => {
+    const fetchAlbumCovers = async() => {
+        const albumsCollection = await db.collection("albums").get()
+        setAlbumsCollection(albumsCollection.docs.map(doc => {
+            return doc.data()
+        }))
+    }
+
+    fetchAlbumCovers()
+
+  },[])
+
+  console.log(albumsCollection)
+  
   
   return (
     <div>
@@ -88,7 +106,25 @@ const Upload = () => {
                 Upload
             </button>
         </form>
+        
+        <div className="container-albums">
+            {albumsCollection.map(album => {
+                return <div 
+                            key={album.albumTitle} 
+                            className="container-albums__album">
 
+                            <img 
+                                width="200px"
+                                src={album.albumCover} 
+                                alt={album.albumTitle}
+                            />
+
+                            <p>{album.albumTitle}</p>
+
+                       </div>
+            })}
+        </div>
+        
     </div>
   )
 } 
