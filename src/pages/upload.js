@@ -1,14 +1,22 @@
 import {useContext, useEffect, useState} from "react"
 import {firebase} from "../lib/firebase"
-
 import UserContext from "../context/user"
 
 import Header from "../components/Header"
+
+import "../styles/upload.css"
 
 const Upload = () => {
     const [fileUrl, setFileUrl] = useState(null)
     const [albumsCollection, setAlbumsCollection] = useState([])
     const [albumTitle, setAlbumTitle] = useState("")
+
+    const [state, setState] = useState({
+      artist: "",
+      year: ""
+    })
+
+    const {artist, year} = state
 
     // create reference to the Firestore database
     const db = firebase.firestore()
@@ -48,6 +56,8 @@ const Upload = () => {
     // create a new user document in FireStore "users" collection
     albumTitle && await db.collection("albums").add({
         albumTitle: albumTitle,
+        artist: artist,
+        year: state.year,
         albumCover: fileUrl,
         uploadedBy: currentUser.uid,
         dateCreated: Date.now()
@@ -77,29 +87,55 @@ const Upload = () => {
 
   },[])
 
+  const handleChange = (event) => {
+    const value = event.target.value
+    setState({
+      ...state,
+      [event.target.name]: value
+    })
+  }
+
+  console.log(artist)
+  console.log(state.year)
+
 //   console.log(albumsCollection)
   
   
   return (
     <div>
         <Header />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-upload">
             {/* file upload */}
             <input 
-            type="file" 
-            onChange={handleFileUpload}
+              type="file" 
+              onChange={handleFileUpload}
             />
 
-            {/* username input */}
             <input
-            type="text"
-            name="Album title"
-            placeholder="Album title"
-            onChange={(event) => setAlbumTitle(event.target.value)}
+              type="text"
+              name="Album title"
+              placeholder="Album title"
+              onChange={(event) => setAlbumTitle(event.target.value)}
+            />
+
+            <input 
+              type="text"
+              name="artist"
+              placeholder="Artist"
+              value={state.artist}
+              onChange={handleChange}
+            />
+
+            <input 
+              type="text"
+              name="year"
+              placeholder="Year"
+              value={state.year}
+              onChange={handleChange}
             />
 
             <button 
-            type="submit"
+              type="submit"
             >
                 Upload
             </button>
@@ -112,7 +148,7 @@ const Upload = () => {
                             className="container-albums__album">
 
                             <img 
-                                width="200px"
+                                width="150px"
                                 src={album.albumCover} 
                                 alt={album.albumTitle}
                             />

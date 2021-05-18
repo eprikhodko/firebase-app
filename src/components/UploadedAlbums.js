@@ -42,6 +42,8 @@ const UploadedAlbums = () => {
                                 />
 
                                 <p>{album.albumTitle}</p>
+                                <p>{album.artist}</p>
+
 
                         </div>
                 })}
