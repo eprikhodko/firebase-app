@@ -29,22 +29,28 @@ const UploadedAlbums = () => {
 
     return(
         <div className="container-main">
+            <h2 className="heading-recently-added-albums">Recently added albums</h2>
             <div className="container-albums">
                 {albumsCollection.map(album => {
                     return <div 
                                 key={album.albumTitle} 
                                 className="container-albums__album"
                             >
-                                <img 
-                                    width="150px"
-                                    src={album.albumCover} 
-                                    alt={album.albumTitle}
-                                />
+                                <div>
+                                    <img
+                                        className="album__cover"
+                                        width="150px"
+                                        src={album.albumCover} 
+                                        alt={album.albumTitle}
+                                    />
 
-                                <p>{album.albumTitle}</p>
-                                <p>{album.artist}</p>
-
-
+                                    <p className="album__album-title">
+                                        {album.albumTitle}
+                                    </p>
+                                    <p className="album__album-artist">
+                                        {album.artist}
+                                    </p>
+                                </div>
                         </div>
                 })}
             </div>
