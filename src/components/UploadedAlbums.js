@@ -40,7 +40,7 @@ const UploadedAlbums = () => {
                                     <div>
                                         <img
                                             className="album__cover"
-                                            width="150px"
+                                            // width="150px"
                                             src={album.albumCover} 
                                             alt={album.albumTitle}
                                         />

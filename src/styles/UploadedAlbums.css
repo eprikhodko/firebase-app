@@ -1,4 +1,6 @@
- /* Typography */
+/* =================
+    Typography 
+   ================= */
 
  .album__album-title {
     font-size: 1.4rem;
@@ -12,19 +14,21 @@
     color: #505050;
 }
 
-/* Layout */
+/* =================
+    Layout 
+   ================= */
 
 .container-uploaded-albums-main {
-    border: 5px solid royalblue;
+    /* border: 5px solid royalblue; */
+
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
  
  .container-uploaded-albums {
-    margin-top: 2em;
-
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
 
     display: flex;
     flex-direction: column;
@@ -35,26 +39,20 @@
 }
  
  .container-albums {
-    /* max-width: 955px; */
-    /* margin: 0 auto; */
-    border: 1px solid coral;
-    /* background-color: teal; */
+    /* border: 1px solid coral; */
 
     display: grid;
-    grid-template-columns: repeat(5, 175px);
+    grid-template-columns: repeat(2, 175px);
     grid-gap: 2em;
 }
 
 .container-albums__album {
-    /* border: 1px solid black; */
-    /* background-color: cornsilk; */
     border-radius: 4px;
     padding-top: 1.25rem;
     transition: all .35s ease-in-out;
 
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     flex-direction: column;
 }
 
@@ -64,15 +62,11 @@
     cursor: pointer;
 }
 
-/* .heading-recently-added-albums {
-    margin-left: 3.4rem;
-} */
-
 .album__cover {
+    max-width: 150px;
     margin-bottom: 1.6rem;
     border-radius: 4px;
     box-shadow: 0 3px 5px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5); */
 }
 
 /* Handle text overflow */
@@ -91,7 +85,33 @@
     margin-top: .4rem;
 }
 
-/* Media queries */
+/* =================
+    Media queries
+   ================= */
+
+@media (max-width:370px) {
+    .container-uploaded-albums {
+        width: 100%;
+        align-items: center;
+    }
+
+    .container-albums {
+        grid-template-columns: repeat(2, 145px);
+        grid-gap: 1em;
+    }
+
+    .album__cover {
+        max-width: 120px;
+    }
+
+    /* Handle text overflow */
+    .album__album-title, .album__album-artist {
+        width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
 
 @media (min-width:500px) {
     .container-albums {
@@ -107,14 +127,12 @@
 
 @media (min-width:800px) {
     .container-albums {
-        /* max-width: 800px; */
         grid-template-columns: repeat(4, 175px);
     }  
 }
 
-@media (min-width:1100px) {
+@media (min-width:1000px) {
     .container-albums {
-        /* max-width: 975px; */
         grid-template-columns: repeat(5, 175px);
     }   
 }
