@@ -28,33 +28,36 @@ const UploadedAlbums = () => {
       console.log(albumsCollection)
 
     return(
-        <div className="container-main">
-            <h2 className="heading-recently-added-albums">Recently added albums</h2>
-            <div className="container-albums">
-                {albumsCollection.map(album => {
-                    return <div 
-                                key={album.albumTitle} 
-                                className="container-albums__album"
-                            >
-                                <div>
-                                    <img
-                                        className="album__cover"
-                                        width="150px"
-                                        src={album.albumCover} 
-                                        alt={album.albumTitle}
-                                    />
+        <div className="container-uploaded-albums-main">
+            <div className="container-uploaded-albums">
+                <h2 className="heading-uploaded-albums">Recently added albums</h2>
+                <div className="container-albums">
+                    {albumsCollection.map(album => {
+                        return <div 
+                                    key={album.albumTitle} 
+                                    className="container-albums__album"
+                                >
+                                    <div>
+                                        <img
+                                            className="album__cover"
+                                            width="150px"
+                                            src={album.albumCover} 
+                                            alt={album.albumTitle}
+                                        />
 
-                                    <p className="album__album-title">
-                                        {album.albumTitle}
-                                    </p>
-                                    <p className="album__album-artist">
-                                        {album.artist}
-                                    </p>
-                                </div>
-                        </div>
-                })}
+                                        <p className="album__album-title">
+                                            {album.albumTitle}
+                                        </p>
+                                        <p className="album__album-artist">
+                                            {album.artist}
+                                        </p>
+                                    </div>
+                            </div>
+                    })}
+                </div>
             </div>
         </div>
+        
        
     )
 }
