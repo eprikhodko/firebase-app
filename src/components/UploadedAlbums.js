@@ -1,4 +1,6 @@
 import {useState, useEffect, useContext} from "react"
+import * as ROUTES from "../constants/routes"
+import { Link } from "react-router-dom"
 import FirebaseContext from "../context/firebase"
 
 import "../styles/UploadedAlbums.css"
@@ -6,6 +8,7 @@ import "../styles/UploadedAlbums.css"
 const UploadedAlbums = () => {
 
     const [albumsCollection, setAlbumsCollection] = useState([])
+    const [albumsIds, setAlbumsIds] = useState([])
 
     const {firebase} = useContext(FirebaseContext)
 
@@ -14,18 +17,41 @@ const UploadedAlbums = () => {
 
     // fetch albums collection from Firestore
      useEffect(() => {
-        const fetchAlbumCovers = async() => {
+        const fetchAlbums = async() => {
             const albumsCollection = await db.collection("albums").get()
             setAlbumsCollection(albumsCollection.docs.map(doc => {
-                return doc.data()
+                return {...doc.data(), albumId: doc.id}
+            }))
+            // console.log(albumsCollection)
+            // console.log(albumsCollection.docs)
+            // console.log(albumsCollection.docs[0].id)
+            setAlbumsIds(albumsCollection.docs.map(doc => {
+                return doc.id
             }))
         }
     
-        fetchAlbumCovers()
+        fetchAlbums()
     
       },[])
+
+    // get albums Ids
+    // useEffect(() => {
+    //     const fetchAlbumsIds = async() => {
+    //         const albumsCollection = await db.collection("albums").get()
+    //         // console.log(albumsCollection)
+    //         // console.log(albumsCollection.docs)
+    //         // console.log(albumsCollection.docs[0].id)
+    //         setAlbumsIds(albumsCollection.docs.map(doc => {
+    //             return doc.id
+    //         }))
+    //     }
+    
+    //     fetchAlbumsIds()
+    
+    //   },[])
     
       console.log(albumsCollection)
+    //   console.log(albumsIds)
 
     return(
         <div className="container-uploaded-albums-main">
@@ -33,8 +59,13 @@ const UploadedAlbums = () => {
                 <h2 className="heading-uploaded-albums">Recently added albums</h2>
                 <div className="container-albums">
                     {albumsCollection.map(album => {
-                        return <div 
-                                    key={album.albumTitle} 
+                        return(
+                            <Link 
+                                to={ROUTES.ALBUM} 
+                                key={album.albumTitle} 
+                                className="container-albums__link"
+                            >
+                                <div 
                                     className="container-albums__album"
                                 >
                                     <div>
@@ -52,7 +83,9 @@ const UploadedAlbums = () => {
                                             {album.artist}
                                         </p>
                                     </div>
-                            </div>
+                                </div>
+                            </Link>
+                        ) 
                     })}
                 </div>
             </div>

@@ -40,8 +40,7 @@ const Login = () => {
 
     return (
         <>
-                    <Header />
-
+        <Header />
         <div className="container">
             <div className="container-login">
                 {error && <p className="paragraph-error">

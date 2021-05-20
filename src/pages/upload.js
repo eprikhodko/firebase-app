@@ -60,8 +60,14 @@ const Upload = () => {
         year: year,
         albumCover: fileUrl,
         uploadedBy: currentUser.uid,
-        dateCreated: Date.now()
+        dateCreated: Date.now(),
+    }).then((docRef) => {
+      console.log("Document written with ID: ", docRef.id)
+      console.log(docRef)
     })
+
+    // add id to album
+
 
     
     setAlbumInfo({

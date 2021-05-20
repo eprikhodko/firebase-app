@@ -46,6 +46,10 @@
     grid-gap: 2em;
 }
 
+.container-albums__link {
+    text-decoration: none;
+}
+
 .container-albums__album {
     border-radius: 4px;
     padding-top: 1.25rem;
