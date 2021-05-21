@@ -8,7 +8,6 @@ import "../styles/UploadedAlbums.css"
 const UploadedAlbums = () => {
 
     const [albumsCollection, setAlbumsCollection] = useState([])
-    const [albumsIds, setAlbumsIds] = useState([])
 
     const {firebase} = useContext(FirebaseContext)
 
@@ -25,9 +24,6 @@ const UploadedAlbums = () => {
             // console.log(albumsCollection)
             // console.log(albumsCollection.docs)
             // console.log(albumsCollection.docs[0].id)
-            setAlbumsIds(albumsCollection.docs.map(doc => {
-                return doc.id
-            }))
         }
     
         fetchAlbums()
@@ -61,8 +57,8 @@ const UploadedAlbums = () => {
                     {albumsCollection.map(album => {
                         return(
                             <Link 
-                                to={ROUTES.ALBUM} 
-                                key={album.albumTitle} 
+                                to={`${ROUTES.ALBUM}/${album.albumId}`} 
+                                key={album.albumId} 
                                 className="container-albums__link"
                             >
                                 <div 
@@ -71,7 +67,6 @@ const UploadedAlbums = () => {
                                     <div>
                                         <img
                                             className="album__cover"
-                                            // width="150px"
                                             src={album.albumCover} 
                                             alt={album.albumTitle}
                                         />

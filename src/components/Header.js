@@ -4,6 +4,7 @@ import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
 import * as ROUTES from "../constants/routes"
 
+import logo from "../img/logo-music-database-theme-dark.png"
 import "../styles/Header.css"
 
 const Header = () => {
@@ -18,7 +19,7 @@ const Header = () => {
                 <Link to={ROUTES.HOME} aria-label="Home">
                     <img 
                         className="container-header__logo" 
-                        src="./images/logo-music-database-theme-dark.png"
+                        src={logo}
                         alt="Music Database logo"
                         width="150px"
                     />
