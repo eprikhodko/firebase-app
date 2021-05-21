@@ -10,7 +10,8 @@ import Login from "./pages/login"
 import Signup from "./pages/signup"
 import BasicFileUpload from "./pages/basic-file-upload"
 import Upload from "./pages/upload"
-import Album from "./pages/album"
+// import Album from "./pages/album"
+import AlbumDetails from "./components/AlbumDetails"
 
 import useAuthListener from "./hooks/useAuthListener"
 
@@ -27,7 +28,7 @@ const App = () => {
               <Route path={ROUTES.SIGNUP} component={Signup} />
               <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
               <Route path={ROUTES.UPLOAD} component={Upload} />
-              <Route path={ROUTES.ALBUM} component={Album} />
+              <Route path={"/album/:albumId"} component={AlbumDetails} />
             </Switch>
       </Router>
     </UserContext.Provider>

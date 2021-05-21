@@ -5,7 +5,7 @@ import FirebaseContext from "../context/firebase"
 
 import "../styles/UploadedAlbums.css"
 
-const UploadedAlbums = () => {
+const RecentlyAddedAlbums = () => {
 
     const [albumsCollection, setAlbumsCollection] = useState([])
 
@@ -90,4 +90,4 @@ const UploadedAlbums = () => {
     )
 }
 
-export default UploadedAlbums
+export default RecentlyAddedAlbums
