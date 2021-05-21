@@ -1,6 +1,100 @@
-.form-upload {
-    max-width: 250px;
-    margin: 0 auto;
+.container-upload-main {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+.container-upload {
+    max-width: 420px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.heading-upload-album {
+    margin-top: 2em;
+}
+
+.form-upload {
+    margin-top: 1em;
+    padding: 2em;
+
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+
+    box-shadow: 0 3px 5px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1.5rem;
+    font-weight: 600;
+
+    margin-top: 0.2em;
+
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    font-family: inherit;
+    margin-bottom: 1.5em;
+    margin-top: 0.8em;
+    padding: 0.7em;
+
+    border: 1px solid #c0c0c0;
+    border-radius: 5px;
+}
+
+.form-upload__input-year {
+    max-width: 100px;
+}
+
+.form-upload__label-upload-album-image {
+    margin-top: 1em;
+}
+
+.form-upload__input-file-upload {
+    /* background-color: #fff; */
+    padding: 0.2em 0.2em 0.2em 0em;
+    border: none;
+}
+
+.form-upload__image-uploaded-album {
+    max-width: 300px;
+    margin-bottom: 2em;
+    border-radius: 10px;
+}
+
+.form-upload__input-checkbox {
+    margin: 0;
+    margin-right: 1em;
+}
+
+.form-upload__label-add-to-my-collection {
+    /* background-color: cornflowerblue; */
+    margin-bottom: 1em;
+    padding: 1em 1em 1em 0;
+
+    font-weight: 300;
+    font-size: 1.4rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.form-upload__btn-submit {
+    font-family: inherit;
+    padding: 0.5em;
+    border: 1px solid #c0c0c0;
+    border-radius: 10px;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.16);
+}
+
+.form-upload__btn-submit:hover {
+    background-color:  #d4d4d4;
 }

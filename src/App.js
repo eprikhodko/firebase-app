@@ -28,7 +28,7 @@ const App = () => {
               <Route path={ROUTES.SIGNUP} component={Signup} />
               <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
               <Route path={ROUTES.UPLOAD} component={Upload} />
-              <Route path={"/album/:albumId"} component={AlbumDetails} />
+              <Route path={`${ROUTES.ALBUMS}/:albumId`} component={AlbumDetails} />
             </Switch>
       </Router>
     </UserContext.Provider>

@@ -3,7 +3,7 @@ import * as ROUTES from "../constants/routes"
 import { Link } from "react-router-dom"
 import FirebaseContext from "../context/firebase"
 
-import "../styles/UploadedAlbums.css"
+import "../styles/RecentlyAddedAlbums.css"
 
 const RecentlyAddedAlbums = () => {
 
@@ -52,12 +52,12 @@ const RecentlyAddedAlbums = () => {
     return(
         <div className="container-uploaded-albums-main">
             <div className="container-uploaded-albums">
-                <h2 className="heading-uploaded-albums">Recently added albums</h2>
+                <h2 className="heading-recently-added-albums">Recently added albums</h2>
                 <div className="container-albums">
                     {albumsCollection.map(album => {
                         return(
                             <Link 
-                                to={`${ROUTES.ALBUM}/${album.albumId}`} 
+                                to={`${ROUTES.ALBUMS}/${album.albumId}`} 
                                 key={album.albumId} 
                                 className="container-albums__link"
                             >

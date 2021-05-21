@@ -124,62 +124,100 @@ const Upload = () => {
   return (
     <div>
         <Header />
-        <form onSubmit={handleSubmit} className="form-upload">
-            {/* file upload */}
-            <input 
-              type="file"
-              onChange={handleFileUpload}
-            />
+        <div className="container-upload-main">
+            <div className="container-upload">
+                <h2 className="heading-upload-album">Upload album to the database</h2>
+                <form onSubmit={handleSubmit} className="form-upload">  
+                  <label>
+                    Album title
+                      <input
+                        type="text"
+                        name="albumTitle"
+                        placeholder="Album title"
+                        value={albumTitle}
+                        onChange={handleChange}
+                      />
+                  </label>
+                    
+                  <label> 
+                    Artist
+                      <input 
+                        type="text"
+                        name="artist"
+                        placeholder="Artist"
+                        value={artist}
+                        onChange={handleChange}
+                      />
+                  </label>
+                    
 
-            <input
-              type="text"
-              name="albumTitle"
-              placeholder="Album title"
-              value={albumTitle}
-              onChange={handleChange}
-            />
+                  <label> 
+                    Released
+                      <input 
+                        type="number"
+                        name="year"
+                        className="form-upload__input-year"
+                        placeholder="Year"
+                        value={year}
+                        onChange={handleChange}
+                      />
+                  </label>
+                  
+                  <label className="form-upload__label-upload-album-image">
+                    Upload album image
+                      <input 
+                          type="file"
+                          onChange={handleFileUpload}
+                          className="form-upload__input-file-upload"
+                      />
+                  </label>
 
-            <input 
-              type="text"
-              name="artist"
-              placeholder="Artist"
-              value={artist}
-              onChange={handleChange}
-            />
+                  {fileUrl 
+                    && 
+                  <img 
+                    className="form-upload__image-uploaded-album" 
+                    src={fileUrl} 
+                    alt="uploaded album"
+                  />}
 
-            <input 
-              type="number"
-              name="year"
-              placeholder="Year"
-              value={year}
-              onChange={handleChange}
-            />
+                  <label>Collection</label>
 
-            <button 
-              type="submit"
-            >
-                Upload
-            </button>
-        </form>
-        
-        <div className="container-albums">
-            {albumsCollection.map(album => {
-                return <div 
-                            key={album.albumTitle} 
-                            className="container-albums__album">
+                  <label className="form-upload__label-add-to-my-collection">
+                      <input
+                        type="checkbox"
+                        name="addToMyCollection"
+                        className="form-upload__input-checkbox"
+                      />
+                    add this album to my collection
+                  </label>
 
-                            <img 
-                                width="150px"
-                                src={album.albumCover} 
-                                alt={album.albumTitle}
-                            />
+                    <button 
+                      type="submit"
+                      className="form-upload__btn-submit"
+                    >
+                        Upload
+                    </button>
+                </form>
+                
+                {/* <div className="container-albums">
+                    {albumsCollection.map(album => {
+                        return <div 
+                                    key={album.albumTitle} 
+                                    className="container-albums__album">
 
-                            <p>{album.albumTitle}</p>
+                                    <img 
+                                        width="150px"
+                                        src={album.albumCover} 
+                                        alt={album.albumTitle}
+                                    />
 
-                       </div>
-            })}
+                                    <p>{album.albumTitle}</p>
+
+                              </div>
+                    })}
+                </div> */}  
+            </div>
         </div>
-        
     </div>
   )
 } 
