@@ -180,7 +180,7 @@ const Upload = () => {
                     alt="uploaded album"
                   />}
 
-                  <label>Collection</label>
+                  {/* <label>Collection</label> */}
 
                   <label className="form-upload__label-add-to-my-collection">
                       <input
@@ -193,9 +193,9 @@ const Upload = () => {
 
                     <button 
                       type="submit"
-                      className="form-upload__btn-submit"
+                      className="form-upload__btn-upload"
                     >
-                        Upload
+                        Upload album to database
                     </button>
                 </form>
                 
