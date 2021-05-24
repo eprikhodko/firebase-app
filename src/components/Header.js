@@ -27,6 +27,14 @@ const Header = () => {
                 <div className="container-buttons">
                     {currentUser ? (
                         < >
+                            <Link to={"/profile"}>
+                                <button
+                                    type="button"
+                                    className=""
+                                >
+                                    Profile
+                                </button>
+                            </Link>
                             <Link to={ROUTES.UPLOAD}>
                                 <button
                                     type="button"
