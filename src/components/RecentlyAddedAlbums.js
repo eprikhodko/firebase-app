@@ -57,7 +57,7 @@ const RecentlyAddedAlbums = () => {
                     {albumsCollection.map(album => {
                         return(
                             <Link 
-                                to={`${ROUTES.ALBUMS}/${album.albumId}`} 
+                                to={`/albums/${album.albumId}`} 
                                 key={album.albumId} 
                                 className="container-albums__link"
                             >

@@ -12,6 +12,8 @@ import BasicFileUpload from "./pages/basic-file-upload"
 import Upload from "./pages/upload"
 import AlbumDetails from "./components/AlbumDetails"
 import Profile from "./pages/profile"
+import Collection from "./pages/collection"
+import NotFound from "./pages/not-found"
 
 import useAuthListener from "./hooks/useAuthListener"
 
@@ -28,8 +30,10 @@ const App = () => {
               <Route path={ROUTES.SIGNUP} component={Signup} />
               <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
               <Route path={ROUTES.UPLOAD} component={Upload} />
-              <Route path={`${ROUTES.ALBUMS}/:albumId`} component={AlbumDetails} />
-              <Route path={"/profile"} component={Profile} />
+              <Route path={ROUTES.ALBUM_DETAILS} component={AlbumDetails} />
+              <Route path={ROUTES.PROFILE} component={Profile} />
+              <Route path={"/collection/:username"} component={Collection} />
+              <Route component={NotFound} />
             </Switch>
       </Router>
     </UserContext.Provider>

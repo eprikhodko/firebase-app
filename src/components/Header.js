@@ -11,7 +11,7 @@ const Header = () => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
     const currentUser = useContext(UserContext)
-    // console.log(currentUser)
+    // console.log(currentUser.displayName)
     
     return (
         <header>
@@ -27,7 +27,7 @@ const Header = () => {
                 <div className="container-buttons">
                     {currentUser ? (
                         < >
-                            <Link to={"/profile"}>
+                            <Link to={`/profile/${currentUser.displayName}`}>
                                 <button
                                     type="button"
                                     className=""
