@@ -36,13 +36,23 @@ const SignUp = () => {
                     displayName: username
                 })
 
-                // create a new user document in FireStore "users" collection
-                await db.collection("users").add({
-                    userId: createdUser.user.uid,
-                    username: username.toLowerCase(),
-                    email: email.toLowerCase(),
-                    dateCreated: Date.now()
+                // create new user document in FireStore "users" collection and set user document ID equal to Firebase Authentication user record
+
+                await db.collection("users").doc(createdUser.user.uid).set({
+                        userId: createdUser.user.uid,
+                        username: username.toLowerCase(),
+                        email: email.toLowerCase(),
+                        dateCreated: Date.now()
+                    
                 })
+
+                // create a new user document in FireStore "users" collection
+                // await db.collection("users").add({
+                //     userId: createdUser.user.uid,
+                //     username: username.toLowerCase(),
+                //     email: email.toLowerCase(),
+                //     dateCreated: Date.now()
+                // })
 
                 // redirect user after creating new user
                 history.push(ROUTES.HOME)

@@ -85,9 +85,6 @@ const Upload = () => {
     // })
 
     fileUrl && console.log("file uploaded")
-
-    
-    
   }
 
   

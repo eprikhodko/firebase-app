@@ -12,15 +12,16 @@ const AlbumDetails = () => {
     const currentUser = useContext(UserContext)
     // const currentUser = null
 
-    // const params = useParams()
-    // console.log(params)
+    const params = useParams()
+    console.log(params)
     // destructure out albumId from params
     const {albumId} = useParams()
+    console.log(albumId)
 
     const {firebase} = useContext(FirebaseContext)
 
-     // create reference to the Firestore database
-     const db = firebase.firestore()
+    // create reference to the Firestore database
+    const db = firebase.firestore()
 
     // make AJAX call to get the info about the specified album
     // I can either make a call to firebase and get an album with provided Id from firestore, or I can get all collection as an array and find specific album there
@@ -32,7 +33,8 @@ const AlbumDetails = () => {
         const fetchAlbumData = async() => {
             const album = await db.collection("albums").doc(albumId).get()
             setAlbumData(album.data())
-            // console.log(albumsCollection)
+            // console.log(album)
+            // console.log(album.data())
             // console.log(albumsCollection.docs)
             // console.log(albumsCollection.docs[0].id)
         }
