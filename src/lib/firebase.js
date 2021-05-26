@@ -1,5 +1,5 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import Firebase from "firebase/app"
+import firebase from "firebase/app"
 // If you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
 // import * as firebase from "firebase/app"
 
@@ -20,7 +20,7 @@ const firebaseConfig = {
     appId: "1:587114597583:web:85879109373d8dfc92fbba"
   }
 
-  // Initialize Firebase
-const firebase = Firebase.initializeApp(firebaseConfig)
+// Initialize Firebase
+const firebaseInitialize = firebase.initializeApp(firebaseConfig)
 
 export {firebase}

@@ -1,8 +1,11 @@
 import {useContext, useEffect, useState} from "react"
 // import {firebase} from "../lib/firebase"
-import firebase from "firebase/app"
+
+// proper import if we dont use FirebaseContext
+// import firebase from "firebase/app"
+
 import UserContext from "../context/user"
-// import FirebaseContext from "../context/firebase"
+import FirebaseContext from "../context/firebase"
 
 import Header from "../components/Header"
 
@@ -10,7 +13,7 @@ import "../styles/upload.css"
 
 const Upload = () => {
 
-  // const {firebase} = useContext(FirebaseContext)
+  const {firebase} = useContext(FirebaseContext)
 
     const [fileUrl, setFileUrl] = useState(null)
     const [albumsCollection, setAlbumsCollection] = useState([])
