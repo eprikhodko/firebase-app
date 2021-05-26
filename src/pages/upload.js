@@ -1,12 +1,17 @@
 import {useContext, useEffect, useState} from "react"
-import {firebase} from "../lib/firebase"
+// import {firebase} from "../lib/firebase"
+import firebase from "firebase/app"
 import UserContext from "../context/user"
+// import FirebaseContext from "../context/firebase"
 
 import Header from "../components/Header"
 
 import "../styles/upload.css"
 
 const Upload = () => {
+
+  // const {firebase} = useContext(FirebaseContext)
+
     const [fileUrl, setFileUrl] = useState(null)
     const [albumsCollection, setAlbumsCollection] = useState([])
     const [isSubmitted, setIsSubmitted] = useState(false)
@@ -70,17 +75,29 @@ const Upload = () => {
 
     const newAlbumRef = db.collection("albums").doc()
 
-    albumTitle && await newAlbumRef.set({
-        albumId: newAlbumRef.id,
-        albumTitle: albumTitle,
-        artist: artist,
-        year: year,
-        albumCover: fileUrl,
-        uploadedBy: currentUser.uid,
-        dateCreated: Date.now(),
-    })
+    const addAlbumToUserCollection = true
+
+    const createNewAlbum = async() => {
+        await newAlbumRef.set({
+          albumId: newAlbumRef.id,
+          albumTitle: albumTitle,
+          artist: artist,
+          year: year,
+          albumCover: fileUrl,
+          uploadedBy: currentUser.uid,
+          dateCreated: Date.now(),
+          albumUsers: []
+      })
+      console.log(newAlbumRef.id)
+      // await db.collection("albums").doc(newAlbumRef.id).update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+      const newAlbum = await db.collection("albums").doc(newAlbumRef.id)
+      console.log(newAlbum)
+      newAlbum.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+    }
 
 
+
+    albumTitle && createNewAlbum()
     
     setAlbumInfo({
       albumTitle: "",
@@ -98,8 +115,6 @@ const Upload = () => {
 
     fileUrl && console.log("file uploaded")
   }
-
-  
 
   useEffect(() => {
     const fetchAlbumItems = async() => {
@@ -128,6 +143,8 @@ const Upload = () => {
   console.log(albumInfo.year)
 
 //   console.log(albumsCollection)
+
+  console.log(firebase.firestore.FieldValue)
   
   
   return (
