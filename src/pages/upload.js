@@ -53,20 +53,32 @@ const Upload = () => {
 
 
 
-    // create a new user document in FireStore "users" collection
-    albumTitle && await db.collection("albums").add({
+    // create a new album document in FireStore "albums" collection
+    // albumTitle && await db.collection("albums").add({
+    //     albumTitle: albumTitle,
+    //     artist: artist,
+    //     year: year,
+    //     albumCover: fileUrl,
+    //     uploadedBy: currentUser.uid,
+    //     dateCreated: Date.now(),
+    // }).then((docRef) => {
+    //   console.log("Document written with ID: ", docRef.id)
+    //   console.log(docRef)
+    // })
+
+    // add id to album
+
+    const newAlbumRef = db.collection("albums").doc()
+
+    albumTitle && await newAlbumRef.set({
+        albumId: newAlbumRef.id,
         albumTitle: albumTitle,
         artist: artist,
         year: year,
         albumCover: fileUrl,
         uploadedBy: currentUser.uid,
         dateCreated: Date.now(),
-    }).then((docRef) => {
-      console.log("Document written with ID: ", docRef.id)
-      console.log(docRef)
     })
-
-    // add id to album
 
 
     

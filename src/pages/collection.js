@@ -1,5 +1,7 @@
 import {useContext, useState, useEffect} from "react"
 
+import {Link} from "react-router-dom"
+
 import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
 
@@ -11,10 +13,6 @@ const Collection = () => {
     const {firebase} = useContext(FirebaseContext)
     const currentUser = useContext(UserContext)
     // console.log(currentUser.uid)
- 
-    // ok, what next? 
-    // next I need to make a call to firestore, and get a user document by Id.
-    // lets first create a reference to the firestore
 
     // create reference to the Firestore database
     const db = firebase.firestore()
@@ -23,49 +21,56 @@ const Collection = () => {
 
     const [albums, setAlbums] = useState([])
 
+    
+
     useEffect(() => {
-
-        const fetchAlbums = async() => {
-            const userAlbums = await db.collection("albums")
-            const query = userAlbums.where("usersCollection", "array-contains", "JDGEJL57awNvQNXQkxk3ClbqdMG2").get()
-
-            // setAlbums(query)
-            
-        }
-
         const fetchUserAlbums = async() => {
             const albumsRef = db.collection("albums")
-            const snapshot = await albumsRef.where("usersCollection", "array-contains", currentUser.uid).get()
-
-            // console.log(snapshot.docs[0].data())
-            
-        //    console.log(snapshot.docs)
+            const snapshot = await albumsRef.where("albumUsers", "array-contains", currentUser.uid).get()
 
             setAlbums(snapshot.docs.map(album => {
                 return album.data()
             }))    
-
-            
-            
-           
         }
 
         fetchUserAlbums()
 
-       
     },[])
 
-    console.log(albums)
+    console.log(albums)  
 
     return(
         <div>
             <Header />
             <div>this is collection of {currentUser.displayName}</div>
             {albums.map(album => {
-                return <div key={album.albumTitle}>
-                            {album.albumTitle}
-                        </div>
-            })}
+                        return(
+                            <Link 
+                                to={`/albums/${album.albumId}`} 
+                                key={album.albumId} 
+                                className="container-albums__link"
+                            >
+                                <div 
+                                    className="container-albums__album"
+                                >
+                                    <div>
+                                        <img
+                                            className="album__cover"
+                                            src={album.albumCover} 
+                                            alt={album.albumTitle}
+                                        />
+
+                                        <p className="album__album-title">
+                                            {album.albumTitle}
+                                        </p>
+                                        <p className="album__album-artist">
+                                            {album.artist}
+                                        </p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ) 
+                    })}
         </div>
     )
 }

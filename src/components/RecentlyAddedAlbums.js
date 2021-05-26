@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext} from "react"
 import * as ROUTES from "../constants/routes"
-import { Link } from "react-router-dom"
+import {Link} from "react-router-dom"
 import FirebaseContext from "../context/firebase"
 
 import "../styles/RecentlyAddedAlbums.css"
@@ -26,7 +26,7 @@ const RecentlyAddedAlbums = () => {
             // console.log(albumsCollection.docs)
             // console.log(albumsCollection.docs[0].id)
         }
-    
+     
         fetchAlbums()
     
     },[])
