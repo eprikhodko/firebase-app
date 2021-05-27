@@ -29,6 +29,8 @@ const Upload = () => {
 
   const currentUser = useContext(UserContext)
 
+  const isInvalid = albumTitle === "" || artist === "" || year === "" || fileUrl === null
+
   // https://firebase.google.com/docs/storage/web/create-reference?authuser=0
   // https://firebase.google.com/docs/storage/web/upload-files?authuser=0
   const handleFileUpload = async (event) => {
@@ -85,7 +87,6 @@ const Upload = () => {
       // add album to user collection by updating albumUsers field in Firestore if user checked 'add this album to my collection' checkbox
       addToUserCollection && createdAlbumRef.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
     }
-
 
     albumTitle && createNewAlbum()
     
@@ -212,7 +213,8 @@ const Upload = () => {
 
                     <button 
                       type="submit"
-                      className="form-upload__btn-upload"
+                      className={`form-upload__btn-upload ${isInvalid && "btn-disabled"}`}
+                      disabled={isInvalid}
                     >
                         Upload album to database
                     </button>

@@ -123,3 +123,12 @@ input[type="file"] {
 .form-upload__label-upload-album-image:hover {
     background-color:  #d4d4d4;
 }
+
+.btn-disabled {
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+.btn-disabled:hover {
+    background-color: #f2f2f2;
+}
