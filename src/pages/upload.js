@@ -25,7 +25,7 @@ const Upload = () => {
     addToUserCollection: false
   })
 
-  const {albumTitle, artist, year} = albumInfo
+  const {albumTitle, artist, year, addToUserCollection} = albumInfo
 
   // create reference to the Firestore database
   const db = firebase.firestore()
@@ -79,8 +79,6 @@ const Upload = () => {
 
     const newAlbumRef = db.collection("albums").doc()
 
-    const addAlbumToUserCollection = true
-
     const createNewAlbum = async() => {
         await newAlbumRef.set({
           albumId: newAlbumRef.id,
@@ -93,10 +91,9 @@ const Upload = () => {
           albumUsers: []
       })
       console.log(newAlbumRef.id)
-      // await db.collection("albums").doc(newAlbumRef.id).update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
-      const newAlbum = await db.collection("albums").doc(newAlbumRef.id)
-      console.log(newAlbum)
-      newAlbum.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+      const createdAlbum = await db.collection("albums").doc(newAlbumRef.id)
+      // add album to user collection by updating albumUsers field in Firestore if user checked 'add this album to my collection' checkbox
+      addToUserCollection && createdAlbum.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
     }
 
 
@@ -132,26 +129,26 @@ const Upload = () => {
 
     fetchAlbumItems()
 
+    setIsSubmitted(false)
+
   },[isSubmitted])
 
   console.log(isSubmitted)
 
   const handleChange = (event) => {
-    const {name, value} = event.target
+    const {name, value, type, checked} = event.target
+    type === "checkbox" ? setAlbumInfo({
+      ...albumInfo,
+      [name]: checked
+    }) 
+    :
     setAlbumInfo({
       ...albumInfo,
       [name]: value
     })
   }
 
-  console.log(albumTitle)
-  console.log(artist)
-  console.log(albumInfo.year)
-
-//   console.log(albumsCollection)
-
-  // console.log(firebase.firestore.FieldValue)
-  
+  // console.log(albumsCollection)  
   
   return (
     <div>
@@ -216,8 +213,9 @@ const Upload = () => {
                   <label className="form-upload__label-add-to-my-collection">
                       <input
                         type="checkbox"
+                        name="addToUserCollection"
                         checked={albumInfo.addToUserCollection}
-                        name="addToMyCollection"
+                        onChange={handleChange}
                         className="form-upload__input-checkbox"
                       />
                     add this album to my collection
