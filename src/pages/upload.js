@@ -1,9 +1,6 @@
 import {useContext, useEffect, useState} from "react"
-// import {firebase} from "../lib/firebase"
-
-// proper import if we dont use FirebaseContext
+// below is a proper import if we don't use FirebaseContext
 // import firebase from "firebase/app"
-
 import UserContext from "../context/user"
 import FirebaseContext from "../context/firebase"
 
@@ -31,14 +28,13 @@ const Upload = () => {
   const db = firebase.firestore()
 
   const currentUser = useContext(UserContext)
-  // console.log(currentUser)
 
   // https://firebase.google.com/docs/storage/web/create-reference?authuser=0
   // https://firebase.google.com/docs/storage/web/upload-files?authuser=0
   const handleFileUpload = async (event) => {
       // get file object from the file input
       const file = event.target.files[0]
-      // create reference to the storage service, which is used to create references in your storage bucket
+      // create reference to the storage service
       const storage = firebase.storage()
       // create storage reference from our storage service
       const storageRef = storage.ref()
@@ -56,29 +52,15 @@ const Upload = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    
-    ////////////////////////////////////////////////////
-    // if username is not empty, then(&& === then) add a new document in collection "users"
+    // <<-- Create document in Firestore -->>
+    // check Add data chapter in Firebase docs
+    // https://firebase.google.com/docs/firestore/manage-data/add-data#web-v8_11
 
-
-
-    // create a new album document in FireStore "albums" collection
-    // albumTitle && await db.collection("albums").add({
-    //     albumTitle: albumTitle,
-    //     artist: artist,
-    //     year: year,
-    //     albumCover: fileUrl,
-    //     uploadedBy: currentUser.uid,
-    //     dateCreated: Date.now(),
-    // }).then((docRef) => {
-    //   console.log("Document written with ID: ", docRef.id)
-    //   console.log(docRef)
-    // })
-
-    // add id to album
-
+    // In some cases, it can be useful to create a document reference with an auto-generated ID, then use the reference later. For this use case, you can call doc():
+    // Add a new document with a generated id.
     const newAlbumRef = db.collection("albums").doc()
 
+    // later...
     const createNewAlbum = async() => {
         await newAlbumRef.set({
           albumId: newAlbumRef.id,
@@ -91,11 +73,18 @@ const Upload = () => {
           albumUsers: []
       })
       console.log(newAlbumRef.id)
-      const createdAlbum = await db.collection("albums").doc(newAlbumRef.id)
-      // add album to user collection by updating albumUsers field in Firestore if user checked 'add this album to my collection' checkbox
-      addToUserCollection && createdAlbum.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
-    }
 
+      // <<-- Get and Read data in Firestore -->>
+      // check Get data chapter in Firebase docs
+      // https://firebase.google.com/docs/firestore/query-data/get-data
+
+      // create reference for an album document we're created above
+      const createdAlbumRef = await db.collection("albums").doc(newAlbumRef.id)
+
+      // <<-- Update a document in Firestore -->>
+      // add album to user collection by updating albumUsers field in Firestore if user checked 'add this album to my collection' checkbox
+      addToUserCollection && createdAlbumRef.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+    }
 
 
     albumTitle && createNewAlbum()
