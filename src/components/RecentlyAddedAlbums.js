@@ -33,58 +33,41 @@ const RecentlyAddedAlbums = () => {
 
     console.log(albumsCollection)
 
+    const albumComponents = albumsCollection.map(album => {
+        return(
+            <Link 
+                to={`/albums/${album.albumId}`} 
+                key={album.albumId} 
+                className="container-albums__link"
+            >
+                <div 
+                    className="container-albums__album"
+                >
+                    <div>
+                        <img
+                            className="album__cover"
+                            src={album.albumCover} 
+                            alt={album.albumTitle}
+                        />
 
-    // get albums Ids
-    // useEffect(() => {
-    //     const fetchAlbumsIds = async() => {
-    //         const albumsCollection = await db.collection("albums").get()
-    //         // console.log(albumsCollection)
-    //         // console.log(albumsCollection.docs)
-    //         // console.log(albumsCollection.docs[0].id)
-    //         setAlbumsIds(albumsCollection.docs.map(doc => {
-    //             return doc.id
-    //         }))
-    //     }
-    
-    //     fetchAlbumsIds()
-    
-    //   },[])
-    
-    //   console.log(albumsIds)
+                        <p className="album__album-title">
+                            {album.albumTitle}
+                        </p>
+                        <p className="album__album-artist">
+                            {album.artist}
+                        </p>
+                    </div>
+                </div>
+            </Link>
+        ) 
+    })
 
     return(
         <div className="container-uploaded-albums-main">
             <div className="container-uploaded-albums">
                 <h2 className="heading-recently-added-albums">Recently added albums</h2>
                 <div className="container-albums">
-                    {albumsCollection.map(album => {
-                        return(
-                            <Link 
-                                to={`/albums/${album.albumId}`} 
-                                key={album.albumId} 
-                                className="container-albums__link"
-                            >
-                                <div 
-                                    className="container-albums__album"
-                                >
-                                    <div>
-                                        <img
-                                            className="album__cover"
-                                            src={album.albumCover} 
-                                            alt={album.albumTitle}
-                                        />
-
-                                        <p className="album__album-title">
-                                            {album.albumTitle}
-                                        </p>
-                                        <p className="album__album-artist">
-                                            {album.artist}
-                                        </p>
-                                    </div>
-                                </div>
-                            </Link>
-                        ) 
-                    })}
+                    {albumComponents}
                 </div>
             </div>
         </div>

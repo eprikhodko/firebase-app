@@ -32,7 +32,7 @@ const App = () => {
               <Route path={ROUTES.UPLOAD} component={Upload} />
               <Route path={ROUTES.ALBUM_DETAILS} component={AlbumDetails} />
               <Route path={ROUTES.PROFILE} component={Profile} />
-              <Route path={"/collection/:username"} component={Collection} />
+              <Route path={ROUTES.COLLECTION} component={Collection} />
               <Route component={NotFound} />
             </Switch>
       </Router>

@@ -1,0 +1,8 @@
+.container-albums-in-collection {
+    border: 5px solid royalblue;
+
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
