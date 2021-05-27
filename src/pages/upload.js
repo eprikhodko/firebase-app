@@ -15,22 +15,23 @@ const Upload = () => {
 
   const {firebase} = useContext(FirebaseContext)
 
-    const [fileUrl, setFileUrl] = useState(null)
-    const [albumsCollection, setAlbumsCollection] = useState([])
-    const [isSubmitted, setIsSubmitted] = useState(false)
-    const [albumInfo, setAlbumInfo] = useState({
-      albumTitle: "",
-      artist: "",
-      year: ""
-    })
+  const [fileUrl, setFileUrl] = useState(null)
+  const [albumsCollection, setAlbumsCollection] = useState([])
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [albumInfo, setAlbumInfo] = useState({
+    albumTitle: "",
+    artist: "",
+    year: "",
+    addToUserCollection: false
+  })
 
-    const {albumTitle, artist, year} = albumInfo
+  const {albumTitle, artist, year} = albumInfo
 
-    // create reference to the Firestore database
-    const db = firebase.firestore()
+  // create reference to the Firestore database
+  const db = firebase.firestore()
 
-    const currentUser = useContext(UserContext)
-    // console.log(currentUser)
+  const currentUser = useContext(UserContext)
+  // console.log(currentUser)
 
   // https://firebase.google.com/docs/storage/web/create-reference?authuser=0
   // https://firebase.google.com/docs/storage/web/upload-files?authuser=0
@@ -102,10 +103,12 @@ const Upload = () => {
 
     albumTitle && createNewAlbum()
     
+    // clean albumInfo state after we submitted album upload form
     setAlbumInfo({
       albumTitle: "",
       artist: "",
-      year: ""
+      year: "",
+      addToUserCollection: false
     })
 
     setFileUrl(null)
@@ -147,7 +150,7 @@ const Upload = () => {
 
 //   console.log(albumsCollection)
 
-  console.log(firebase.firestore.FieldValue)
+  // console.log(firebase.firestore.FieldValue)
   
   
   return (
@@ -179,7 +182,6 @@ const Upload = () => {
                       />
                   </label>
                     
-
                   <label> 
                     Released
                       <input 
@@ -214,6 +216,7 @@ const Upload = () => {
                   <label className="form-upload__label-add-to-my-collection">
                       <input
                         type="checkbox"
+                        checked={albumInfo.addToUserCollection}
                         name="addToMyCollection"
                         className="form-upload__input-checkbox"
                       />
