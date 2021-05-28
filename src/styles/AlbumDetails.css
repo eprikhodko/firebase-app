@@ -17,4 +17,6 @@
 .container-album__album-cover {
     max-width: 250px;
     margin-right: 2em;
+
+    /* border-radius: 10px; */
 }

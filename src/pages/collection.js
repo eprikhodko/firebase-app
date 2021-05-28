@@ -25,7 +25,7 @@ const Collection = () => {
     
 
     useEffect(() => {
-        const fetchUserAlbums = async() => {
+        const fetchAlbumsInUserCollection = async() => {
             const albumsRef = db.collection("albums")
             const snapshot = await albumsRef.where("albumUsers", "array-contains", currentUser.uid).get()
 
@@ -34,7 +34,7 @@ const Collection = () => {
             }))    
         }
 
-        fetchUserAlbums()
+        fetchAlbumsInUserCollection()
 
     },[])
 
