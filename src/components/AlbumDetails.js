@@ -59,11 +59,13 @@ const AlbumDetails = () => {
     const handleRemoveFromCollection = async() => {
         const album = await db.collection("albums").doc(albumId)
         album.update({albumUsers: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)})
+        setIsInCollection(false)
     }
 
     const handleAddToCollection = async() => {
         const album = await db.collection("albums").doc(albumId)
         album.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+        setIsInCollection(true)
     }
 
     const albumButtons = 
