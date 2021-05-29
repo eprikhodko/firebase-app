@@ -14,38 +14,39 @@ const Header = () => {
     // console.log(currentUser.displayName)
     
     return (
-        <header>
-            <div className="container-header">
-                <Link to={ROUTES.HOME} aria-label="Home">
-                    <img 
+        <header className="header">
+            <div className="header__container">
+                <Link to={ROUTES.HOME} aria-label="Home" className="header__link">
+                    {/* <img 
                         className="container-header__logo" 
                         src={logo}
                         alt="Music Database logo"
                         width="150px"
-                    />
+                    /> */}
+                    <p className="header__logo">MusicDB</p>
                 </Link>
-                <div className="container-buttons">
+                <div className="header__container-buttons">
                     {currentUser ? (
                         < >
                             <Link to={`/profile/${currentUser.displayName}`}>
-                                <button
+                                {/* <button
                                     type="button"
                                     className=""
                                 >
                                     Profile
-                                </button>
+                                </button> */}
                             </Link>
+
                             <Link to={ROUTES.UPLOAD}>
-                                <button
+                                {/* <button
                                     type="button"
                                     className=""
                                 >
                                     Upload
-                                </button>
+                                </button> */}
                             </Link>
                              
-
-                            <button 
+                            {/* <button 
                                 type="button"
                                 onClick={() => firebase.auth().signOut()}
                                 onKeyDown={(event) => {
@@ -54,7 +55,9 @@ const Header = () => {
                                     }
                             }}> 
                                 Sign Out 
-                            </button>
+                            </button> */}
+
+                            <button className="header__btn">Account</button>
                         </>
                     ):(
                         < >

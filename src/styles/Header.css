@@ -1,3 +1,17 @@
+
+.header__logo {
+    font-family: inherit;
+    font-size: 2.2rem;
+    font-weight: 400;
+    text-decoration: none;
+    color: #fff;
+
+}
+
+.header__link {
+    text-decoration: none;
+}
+
 button {
     font-family: 'Roboto', sans-serif;
     font-weight: 600;
@@ -8,11 +22,14 @@ button {
 header {
     background-color: #494949;
     /* border-bottom: 1px solid #dbdbdb; */
+    padding: .5em 0;
 }
 
-.container-header {
-    max-width: 1280px;
-    width: 95%;
+.header__container {
+    /* border: 5px solid cornflowerblue; */
+
+    /* max-width: 1500px; */
+    width: 85%;
     height: 5.5rem;
     margin: 0 auto;
 
@@ -21,9 +38,19 @@ header {
     align-items: center;
 }
 
-.container-buttons {
+.header__container-buttons {
     display: flex;
     align-items: center;
+}
+
+.header__btn {
+    /* height: 32px; */
+    padding: .8em 1.2em;
+    background-color: rgba(0,0,0,.7);
+    font-family: inherit;
+    color: #fff;
+    border: 0;
+    border-radius: 23px;
 }
 
 .container-buttons__button-login {

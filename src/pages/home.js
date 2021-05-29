@@ -4,11 +4,13 @@ import "../styles/App.css"
 
 import Header from "../components/Header"
 import RecentlyAddedAlbums from "../components/RecentlyAddedAlbums"
+import FeaturedAlbums from "../components/FeaturedAlbums"
 
 const Home = () => {
     return(
         <div>
             <Header />
+            <FeaturedAlbums />
             <RecentlyAddedAlbums />
 
             {/* <Link to={ROUTES.BASIC_FILE_UPLOAD} aria-label="Home">
