@@ -1,9 +1,27 @@
 .container-featured-albums {
-    margin-top: 2em;
+    /* border: 1px solid magenta; */
+
+    margin-top: 4em;
 
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.featured-albums {
+    /* border: 1px solid green; */
+
+    margin-top: 3em;
+    display: flex;
+    align-items: center;
+}
+
+.arrow {
+    max-width: 50px;
+}
+
+.flip-horizontally {
+    transform: scaleX(-1);
 }
 
 .album-featured {
@@ -12,20 +30,27 @@
 
 .album-featured {
     border-radius: 4px;
-    /* padding-top: 1.25rem; */
     transition: all .35s ease-in-out;
 
     display: flex;
     align-items: center;
     flex-direction: column;
+    justify-content: center;
 }
 
-.album-featured__title {
-    transition: all .35s ease-in-out;
-
+.album-featured__title, 
+.album-featured__artist {
+    transition: all .7s ease-in-out;
 }
 
 .album-featured:hover .album-featured__title {
+    /* background-color: #cecece; */
+    /* border-radius: 4px; */
+    cursor: pointer;
+    color: #343434;
+}
+
+.album-featured:hover .album-featured__artist {
     /* background-color: #cecece; */
     /* border-radius: 4px; */
     cursor: pointer;
@@ -49,8 +74,35 @@
 }
 
 .album-featured__title {
+    margin: 0;
+    margin-top: 1em; 
+    margin-bottom: .5em;
     font-size: 1.4rem;
-    color: #343434;
     color: #f2f2f2;
     font-weight: 700;
+}
+
+/* Handle text overflow */
+.album-featured__artist {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album-featured__artist--central {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.album-featured__artist {
+    margin: 0;
+    margin-top: 1em;
+    font-size: 1.4rem;
+    color: #f2f2f2;
+    /* color: #343434; */
+    font-weight: 400;
+    text-align: center;
 }

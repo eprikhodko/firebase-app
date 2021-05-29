@@ -3,6 +3,8 @@ import * as ROUTES from "../constants/routes"
 import {Link} from "react-router-dom"
 import FirebaseContext from "../context/firebase"
 
+import {ReactComponent as IconArrow} from "../icons/arrow-right.svg"
+
 import "../styles/FeaturedAlbums.css"
 
 const FeaturedAlbums = () => {
@@ -32,7 +34,7 @@ const FeaturedAlbums = () => {
 
     // console.log(albumsCollection.slice(10))
 
-    const albumComponents = albumsCollection.slice(9).map((album, index) => {
+    const albumComponents = albumsCollection.slice(12).map((album, index) => {
         return(
             <Link 
                 to={`/albums/${album.albumId}`} 
@@ -40,20 +42,19 @@ const FeaturedAlbums = () => {
                 className="container-albums__link"
             >
                 <div className="album-featured">
-                    <div>
                         <img
                             className={`album__cover album__cover--featured ${index === 1 && "album__cover--central-album"}`}
                             src={album.albumCover} 
                             alt={album.albumTitle}
                         />
 
-                        <p className="album-featured__title">
-                            {album.albumTitle}
+                        <p className={`album-featured__artist ${index === 1 && "album-featured__artist--central"}`}>
+                            <span className="album-featured__title">
+                            {album.albumTitle}</span> <span className="album-featured__artist">- {album.artist}</span>
                         </p>
-                        {/* <p className="album__album-artist">
+                        {/* <p className="album-featured__artist">
                             {album.artist}
                         </p> */}
-                    </div>
                 </div>
             </Link>
         ) 
@@ -61,8 +62,12 @@ const FeaturedAlbums = () => {
 
     return(
         <div className="container-featured-albums">
+            <IconArrow className="arrow flip-horizontally"/>
+            <div className="featured-albums">
+                {albumComponents}
+            </div>
             {/* <div>this is featured albums</div> */}
-            {albumComponents}
+            <IconArrow className="arrow"/>
         </div>
     )
 }
