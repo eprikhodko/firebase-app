@@ -16,15 +16,31 @@ const Header = () => {
     return (
         <header className="header">
             <div className="header__container">
-                <Link to={ROUTES.HOME} aria-label="Home" className="header__link">
-                    {/* <img 
-                        className="container-header__logo" 
-                        src={logo}
-                        alt="Music Database logo"
-                        width="150px"
-                    /> */}
-                    <p className="header__logo">MusicDB</p>
-                </Link>
+                <div className="header__container-search">
+                    <Link to={ROUTES.HOME} aria-label="Home" className="header__link">
+                        {/* <img 
+                            className="container-header__logo" 
+                            src={logo}
+                            alt="Music Database logo"
+                            width="150px"
+                        /> */}
+                        <p className="header__logo">MusicDB</p>
+                    </Link>
+
+                    <form className="header__form-search" onSubmit={() => console.log("search")}>
+                        {/* <label className="label" htmlFor="query">Movie Name</label> */}
+                        <input 
+                            className="header__input-search" 
+                            type="text" 
+                            name="query"
+                            placeholder="search" 
+                            // value={query} 
+                            // onChange={handleChange}
+                        />
+                        {/* <button className="button-search" type="submit">Search</button> */}
+                    </form>
+                </div>
+                
                 <div className="header__container-buttons">
                     {currentUser ? (
                         < >
