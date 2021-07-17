@@ -45,24 +45,24 @@ const Header = () => {
                     {currentUser ? (
                         < >
                             <Link to={`/profile/${currentUser.displayName}`}>
-                                {/* <button
+                                <button
                                     type="button"
                                     className=""
                                 >
                                     Profile
-                                </button> */}
+                                </button>
                             </Link>
 
                             <Link to={ROUTES.UPLOAD}>
-                                {/* <button
+                                <button
                                     type="button"
                                     className=""
                                 >
                                     Upload
-                                </button> */}
+                                </button>
                             </Link>
                              
-                            {/* <button 
+                            <button 
                                 type="button"
                                 onClick={() => firebase.auth().signOut()}
                                 onKeyDown={(event) => {
@@ -71,9 +71,9 @@ const Header = () => {
                                     }
                             }}> 
                                 Sign Out 
-                            </button> */}
+                            </button>
 
-                            <button className="header__btn">Account</button>
+                            {/* <button className="header__btn">Account</button> */}
                         </>
                     ):(
                         < >
