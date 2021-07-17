@@ -21,24 +21,70 @@ const Collection = () => {
     // now lets make an AJAX call to firestore and save response to the state
 
     const [albums, setAlbums] = useState([])
+    const [albumsCollection, setAlbumsCollection] = useState([])
+
 
     
 
     useEffect(() => {
         const fetchAlbumsInUserCollection = async() => {
-            const albumsRef = db.collection("albums")
-            const snapshot = await albumsRef.where("albumUsers", "array-contains", currentUser.uid).get()
+            const albumsRef = db.collection("user-album-rel")
+            const albumDocRef = db.collection("user-album-rel").doc("JDGEJL57awNvQNXQkxk3ClbqdMG2")
+            // const snapshot = await albumsRef.where("albumUsers", "array-contains", currentUser.uid).get()
+            // const albumsSnapshot = await albumsRef.where("userId", "==", "JDGEJL57awNvQNXQkxk3ClbqdMG2").get()
+            const albumsSnapshot = await albumsRef.where("userId", "==", true).get()
 
-            setAlbums(snapshot.docs.map(album => {
+
+            setAlbums(albumsSnapshot.docs.map(album => {
                 return album.data()
-            }))    
+            }))  
+            
+            // console.log(albumsRef)
+            console.log(albumsSnapshot.docs)
+            // console.log(currentUser.uid)
         }
 
         fetchAlbumsInUserCollection()
 
     },[])
 
+      // fetch albums collection from Firestore
+      useEffect(() => {
+        const fetchAlbums = async() => {
+            // const albumsCollection = await db.collection("user-album-rel").get()
+            // const docRef = db.collection("users").doc("JDGEJL57awNvQNXQkxk3ClbqdMG2")
+            const docRef = db.collection("users").doc(currentUser.uid)
+            
+            console.log(docRef)
+            const albumsCollection = await db.collection("user-album-rel").get()
+            albumsCollection.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+            });
+
+            const albumsQuery = await db.collection("user-album-rel").where("userId", "==", docRef).get()
+            console.log(albumsQuery)
+            albumsQuery.docs.map(doc => {
+                console.log(doc.data())}
+                )
+    
+            // for each album document in "albums" collection in fireStore, return album document
+            setAlbumsCollection(albumsCollection.docs.map(doc => {
+                return doc.data()
+            }))
+            console.log(albumsCollection)
+            // console.log(albumsCollection.docs)
+            // console.log(albumsCollection.docs[0].id)
+        }
+     
+        fetchAlbums()
+    
+    },[])
+
+    console.log(albumsCollection)
+
     console.log(albums)  
+    
 
     const albumComponents = albums.map(album => {
         return(
