@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/firebase-app/static/css/main.ed522936.chunk.css",
-    "main.js": "/firebase-app/static/js/main.c6903a37.chunk.js",
-    "main.js.map": "/firebase-app/static/js/main.c6903a37.chunk.js.map",
+    "main.js": "/firebase-app/static/js/main.7d9814d5.chunk.js",
+    "main.js.map": "/firebase-app/static/js/main.7d9814d5.chunk.js.map",
     "runtime-main.js": "/firebase-app/static/js/runtime-main.8bfa085b.js",
     "runtime-main.js.map": "/firebase-app/static/js/runtime-main.8bfa085b.js.map",
-    "static/js/2.391f3724.chunk.js": "/firebase-app/static/js/2.391f3724.chunk.js",
-    "static/js/2.391f3724.chunk.js.map": "/firebase-app/static/js/2.391f3724.chunk.js.map",
+    "static/js/2.926fab0c.chunk.js": "/firebase-app/static/js/2.926fab0c.chunk.js",
+    "static/js/2.926fab0c.chunk.js.map": "/firebase-app/static/js/2.926fab0c.chunk.js.map",
     "index.html": "/firebase-app/index.html",
     "static/css/main.ed522936.chunk.css.map": "/firebase-app/static/css/main.ed522936.chunk.css.map",
-    "static/js/2.391f3724.chunk.js.LICENSE.txt": "/firebase-app/static/js/2.391f3724.chunk.js.LICENSE.txt",
+    "static/js/2.926fab0c.chunk.js.LICENSE.txt": "/firebase-app/static/js/2.926fab0c.chunk.js.LICENSE.txt",
     "static/media/arrow-right.a2811743.svg": "/firebase-app/static/media/arrow-right.a2811743.svg",
     "static/media/logo-music-database-theme-dark.6eae5c55.png": "/firebase-app/static/media/logo-music-database-theme-dark.6eae5c55.png"
   },
   "entrypoints": [
     "static/js/runtime-main.8bfa085b.js",
-    "static/js/2.391f3724.chunk.js",
+    "static/js/2.926fab0c.chunk.js",
     "static/css/main.ed522936.chunk.css",
-    "static/js/main.c6903a37.chunk.js"
+    "static/js/main.7d9814d5.chunk.js"
   ]
 }
