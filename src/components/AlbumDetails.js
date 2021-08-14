@@ -45,7 +45,7 @@ const AlbumDetails = () => {
 
     },[])
 
-    console.log(albumUsers) 
+    // console.log(albumUsers) 
     // console.log(currentUser.uid)
     console.log(`album is in collection: ${isInCollection}`)
 
