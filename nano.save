@@ -1,0 +1,7 @@
+ for authenticated users only:
+
+    add/remove an album to/from collection and wishlist
+    switch between grid/row view for collection and wishlist
+    sort albums by date added to database, artist, album, genre, release year
+    upload new album to the database
+    view all albums uploaded by the current user

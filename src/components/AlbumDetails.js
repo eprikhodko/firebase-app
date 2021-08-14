@@ -70,8 +70,7 @@ const AlbumDetails = () => {
 
     const albumButtons = 
     // check if user is logged in
-    !currentUser
-    ? <p>Login to add this album to your collection</p>
+    !currentUser ? <p className="paragraph-notification">Login to add this album to your collection</p>
     // if user is logged in, check if album is in user collection
     : isInCollection
         ? <button
