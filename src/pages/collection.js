@@ -19,28 +19,36 @@ const Collection = () => {
     const db = firebase.firestore()
 
     // now lets make an AJAX call to firestore and save response to the state
+    const [albumsData, setAlbumsData] = useState([])
 
-    const [albums, setAlbums] = useState([])
-
-    
 
     useEffect(() => {
         const fetchAlbumsInUserCollection = async() => {
-            const albumsRef = db.collection("albums")
-            const snapshot = await albumsRef.where("albumUsers", "array-contains", currentUser.uid).get()
+            const albumsRef = db.collection("user-album-rel")
+            const snapshot = await albumsRef.where("userId", "==", currentUser.uid)
+            .get()
 
-            setAlbums(snapshot.docs.map(album => {
-                return album.data()
-            }))    
+            const array = snapshot.docs.map(doc => {
+                return doc.data().albumId
+            })
+
+            const albumsDataRef=db.collection("albums")
+
+            const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', array)
+                .get()
+
+            setAlbumsData(albumsDataSnapshot.docs.map(doc => {
+                return doc.data()
+            }))
         }
 
         fetchAlbumsInUserCollection()
-
+       
     },[])
 
-    console.log(albums)  
+    console.log(albumsData)
 
-    const albumComponents = albums.map(album => {
+    const albumComponents = albumsData.map(album => {
         return(
             <Link 
                 to={`/albums/${album.albumId}`} 
@@ -56,7 +64,6 @@ const Collection = () => {
                             src={album.albumCover} 
                             alt={album.albumTitle}
                         />
-
                         <p className="album__album-title">
                             {album.albumTitle}
                         </p>
