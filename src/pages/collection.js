@@ -17,29 +17,63 @@ const Collection = () => {
 
     // create reference to the Firestore database
     const db = firebase.firestore()
+    // create references to the Firestore collections
+    const albumsDataRef=db.collection("albums")
 
-    // now lets make an AJAX call to firestore and save response to the state
     const [albumsData, setAlbumsData] = useState([])
-
 
     useEffect(() => {
         const fetchAlbumsInUserCollection = async() => {
-            const albumsRef = db.collection("user-album-rel")
-            const snapshot = await albumsRef.where("userId", "==", currentUser.uid)
+            const userAlbumRecordsSnapshot = await db.collection("user-album-rel").where("userId", "==", currentUser.uid)
             .get()
 
-            const array = snapshot.docs.map(doc => {
+            const albumsIdsArray = userAlbumRecordsSnapshot.docs.map(doc => {
                 return doc.data().albumId
             })
 
-            const albumsDataRef=db.collection("albums")
+            console.log(albumsIdsArray)
 
-            const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', array)
-                .get()
+            // const fetchedAlbums = await albumsIdsArray.map(id => {
+            //     return db.collection("albums").where("albumId", "==", id)
+            //     .get()
+            // })
 
-            setAlbumsData(albumsDataSnapshot.docs.map(doc => {
-                return doc.data()
-            }))
+
+            // console.log(fetchedAlbums)
+
+            const albumsDataArray = []
+
+            for (let i = 0; i < albumsIdsArray.length; i++) {
+                const albumRef = db.collection("albums").doc(albumsIdsArray[i])
+                const doc = await albumRef.get()
+                if (!doc.exists) {
+                    console.log('No such document!');
+                } else {
+                    albumsDataArray.push(doc.data())
+                    console.log('Document data:', doc.data());
+                }
+            }
+
+            setAlbumsData(albumsDataArray)
+
+            // const albumRef = db.collection("albums").doc("AuO9i3l3cfrT1xQfts3k")
+            // const doc = await albumRef.get()
+            // if (!doc.exists) {
+            //     console.log('No such document!');
+            //   } else {
+            //     console.log('Document data:', doc.data());
+            //   }
+
+            
+            
+
+
+            // const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', albumIdsArray)
+            // .get()
+
+            // setAlbumsData(albumsDataSnapshot.docs.map(doc => {
+            //     return doc.data()
+            // }))
         }
 
         fetchAlbumsInUserCollection()
