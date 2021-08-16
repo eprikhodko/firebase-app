@@ -112,7 +112,8 @@ const AlbumDetails = () => {
     const handleAddToCollection = async() => {
         const res = await db.collection("user-album-rel").add({
             albumId: albumId,
-            userId: currentUser.uid
+            userId: currentUser.uid,
+            addedToUserCollection: firebase.firestore.FieldValue.serverTimestamp()
         })
         console.log('Added document with ID: ', res.id);
         setAlbumIdInUserAlbumRelCollection(res.id)

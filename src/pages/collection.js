@@ -24,7 +24,8 @@ const Collection = () => {
 
     useEffect(() => {
         const fetchAlbumsInUserCollection = async() => {
-            const userAlbumRecordsSnapshot = await db.collection("user-album-rel").where("userId", "==", currentUser.uid)
+            const userAlbumRecordsSnapshot = await db.collection("user-album-rel").where("userId", "==", currentUser.uid)  
+            .orderBy("addedToUserCollection", "desc")
             .get()
 
             const albumsIdsArray = userAlbumRecordsSnapshot.docs.map(doc => {
@@ -37,7 +38,6 @@ const Collection = () => {
             //     return db.collection("albums").where("albumId", "==", id)
             //     .get()
             // })
-
 
             // console.log(fetchedAlbums)
 
