@@ -90,6 +90,24 @@ const AlbumDetails = () => {
     // const isAlbumInUserCollection = albumUsers.includes(currentUser.uid)
     // console.log(isAlbumInUserCollection)
 
+
+    const handleAddToCollection = async() => {
+        const res = await db.collection("user-album-rel").add({
+            albumId: albumId,
+            userId: currentUser.uid,
+            addedToUserCollection: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        console.log('Added document with ID: ', res.id);
+        setAlbumIdInUserAlbumRelCollection(res.id)
+        setIsInCollection(true)
+    }
+
+    const AddToCollection = async() => {
+        const album = await db.collection("albums").doc(albumId)
+        album.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+        setIsInCollection(true)
+    }
+
     const handleRemoveFromCollection = async() => {
 
         const res = await db.collection("user-album-rel").doc(albumIdInUserAlbumRelCollection).delete()
@@ -109,22 +127,6 @@ const AlbumDetails = () => {
         setIsInCollection(false)
     }
 
-    const handleAddToCollection = async() => {
-        const res = await db.collection("user-album-rel").add({
-            albumId: albumId,
-            userId: currentUser.uid,
-            addedToUserCollection: firebase.firestore.FieldValue.serverTimestamp()
-        })
-        console.log('Added document with ID: ', res.id);
-        setAlbumIdInUserAlbumRelCollection(res.id)
-        setIsInCollection(true)
-    }
-
-    const AddToCollection = async() => {
-        const album = await db.collection("albums").doc(albumId)
-        album.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
-        setIsInCollection(true)
-    }
 
     const albumButtons = 
     // check if album data is loaded. If it is loaded, then proceed to show a paragraph or buttons to add or remove album from collection

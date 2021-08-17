@@ -17,7 +17,9 @@ const RecentlyAddedAlbums = () => {
     // fetch albums collection from Firestore
      useEffect(() => {
         const fetchAlbums = async() => {
-            const albumsCollection = await db.collection("albums").get()
+            const albumsCollection = await db.collection("albums")
+            .orderBy("dateCreated", "desc")
+            .get()
             // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
             setAlbumsCollection(albumsCollection.docs.map(doc => {
                 return {...doc.data(), albumId: doc.id}

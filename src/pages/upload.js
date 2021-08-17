@@ -64,16 +64,18 @@ const Upload = () => {
 
     // later...
     const createNewAlbum = async() => {
-        await newAlbumRef.set({
+        await newAlbumRef.set(
+          {
           albumId: newAlbumRef.id,
           albumTitle: albumTitle,
           artist: artist,
           year: year,
           albumCover: fileUrl,
           uploadedBy: currentUser.uid,
-          dateCreated: Date.now(),
+          dateUploaded: firebase.firestore.FieldValue.serverTimestamp(),
           albumUsers: []
-      })
+      }
+      )
       console.log(newAlbumRef.id)
 
       // <<-- Get and Read data in Firestore -->>
