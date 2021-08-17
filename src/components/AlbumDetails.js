@@ -31,94 +31,70 @@ const AlbumDetails = () => {
     // I can either make a call to firebase and get an album with provided Id from firestore, or I can get all collection as an array and find specific album there
 
     const [albumData, setAlbumData] = useState([])
-    const {albumCover, artist, year, albumTitle, albumUsers} = albumData
+    const {albumCover, artist, year, albumTitle} = albumData
 
     const [isInCollection, setIsInCollection] = useState(false)
 
-    const [albumIdInUserAlbumRelCollection, setAlbumIdInUserAlbumRelCollection] = useState(null)
+    const [albumIdInUserAlbumsCollection, setAlbumIdInUserAlbumsCollection] = useState(null)
+    
 
     useEffect(() => {
+
+        // this function will fetch album data first, then if user is logged in, checkIfAlbumIsInUserCollection() function will run
         const fetchAlbumData = async() => {
             const album = await db.collection("albums").doc(albumId).get()
             setAlbumData(album.data())
-
-            // proceed this step only if user is logged in. currentUser is true? then setIsIncollection()
-            // currentUser && setIsInCollection(album.data().albumUsers.includes(currentUser.uid))
-            // console.log(album.data().albumUsers.includes(currentUser.uid))
         }
     
         fetchAlbumData()
 
-        const fetchQuerySnapshot = async() => {
-            const snapshot = await albumsRef.where("albumId", "==", albumId).where("userId", "==", currentUser.uid)
+        // this function will run only if user is logged in
+        const checkIfAlbumIsInUserCollection = async() => {
+            const snapshot = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
+            .where("albumId", "==", albumId)
             .get()
             if (snapshot.empty) {
-                console.log('No matching documents.')
-                return;
-              }  
-              
+                console.log('Album is not in user collection.')
+                return
+              }
+         
             snapshot.docs.map(doc => {
-                console.log(doc.data().userId)
-                setAlbumIdInUserAlbumRelCollection(doc.id)
-                console.log(albumIdInUserAlbumRelCollection)
+                console.log(doc.data())
                 console.log(doc.id)
-                return currentUser && setIsInCollection(doc.data().userId)
+                setAlbumIdInUserAlbumsCollection(doc.id)
+                return setIsInCollection(true)
             })
-
-            // snapshot.forEach(doc => {
-            // console.log(doc.id, '=>', doc.data())
-            // console.log(doc.data().userId)
-            // })
-           
-
         }
-    
-        fetchQuerySnapshot()
+
+        // run this function only if user is logged in, or it will throw an error, because currentUser.uid will be null
+       currentUser && checkIfAlbumIsInUserCollection()
 
         console.log(isInCollection)
 
     },[])
-    
-    // console.log(albumUsers) 
-    // console.log(currentUser.uid)
-    // console.log(`album is in collection: ${isInCollection}`)
-
-    // console.log(albumUsers.includes(currentUser.uid))
-
-    // looks like I can also perform a separate query to the firestore and check if user id is in albumUsers field.
-
-    // const isAlbumInUserCollection = albumUsers.includes(currentUser.uid)
-    // console.log(isAlbumInUserCollection)
-
 
     const handleAddToCollection = async() => {
-        const res = await db.collection("user-album-rel").add({
+        const res = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
+        .add({
             albumId: albumId,
-            userId: currentUser.uid,
-            addedToUserCollection: firebase.firestore.FieldValue.serverTimestamp()
+            dateAdded: firebase.firestore.FieldValue.serverTimestamp()
         })
         console.log('Added document with ID: ', res.id);
-        setAlbumIdInUserAlbumRelCollection(res.id)
+        setAlbumIdInUserAlbumsCollection(res.id)
         setIsInCollection(true)
+    }
+
+    const handleRemoveFromCollection = async() => {
+        const res = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection").doc(albumIdInUserAlbumsCollection)
+        .delete()
+        console.log('Removed document with ID:', albumIdInUserAlbumsCollection)
+        setIsInCollection(false)
     }
 
     const AddToCollection = async() => {
         const album = await db.collection("albums").doc(albumId)
         album.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
         setIsInCollection(true)
-    }
-
-    const handleRemoveFromCollection = async() => {
-
-        const res = await db.collection("user-album-rel").doc(albumIdInUserAlbumRelCollection).delete()
-        setIsInCollection(false)
-        // const albumRef = db.collection("user-album-rel").doc(albumIdInUserAlbumRelCollection)
-        // const doc = await albumRef.get();
-        // if (!doc.exists) {
-        // console.log('No such document!');
-        // } else {
-        // console.log('Document data:', doc.data());
-        // }
     }
 
     const RemoveFromCollection = async() => {

@@ -21,16 +21,26 @@ const Collection = () => {
     const albumsDataRef=db.collection("albums")
 
     const [albumsData, setAlbumsData] = useState([])
+    const [albumsIds, setAlbumsIds] = useState([])
 
     useEffect(() => {
         const fetchAlbumsInUserCollection = async() => {
-            const userAlbumRecordsSnapshot = await db.collection("user-album-rel").where("userId", "==", currentUser.uid)  
-            .orderBy("addedToUserCollection", "desc")
+            const snapshot = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
+            .orderBy("dateAdded", "desc")
             .get()
 
-            const albumsIdsArray = userAlbumRecordsSnapshot.docs.map(doc => {
+            console.log(snapshot)
+            const albumsInUserCollection = snapshot.docs.map(doc => {
+                return doc.data()
+            })
+
+            console.log(albumsInUserCollection)
+
+            const albumsIdsArray = snapshot.docs.map(doc => {
                 return doc.data().albumId
             })
+
+            setAlbumsIds(albumsIdsArray)
 
             console.log(albumsIdsArray)
 
@@ -41,39 +51,60 @@ const Collection = () => {
 
             // console.log(fetchedAlbums)
 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// an old way of retreiving albums collection
+            // const albumsDataArray = []
+
+            // for (let i = 0; i < albumsIdsArray.length; i++) {
+            //     const albumRef = db.collection("albums").doc(albumsIdsArray[i])
+            //     const doc = await albumRef.get()
+            //     if (!doc.exists) {
+            //         console.log('No such document!');
+            //     } else {
+            //         albumsDataArray.push(doc.data())
+            //         console.log('Document data:', doc.data());
+            //     }
+            // }
+
+            // setAlbumsData(albumsDataArray)
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            
+            
+            const chunk = 10
             const albumsDataArray = []
+            for (let i = 0; i < albumsIdsArray.length; i+= chunk) {
+                let temporary = albumsIdsArray.slice(i, i + chunk)
+                console.log(temporary)
 
-            for (let i = 0; i < albumsIdsArray.length; i++) {
-                const albumRef = db.collection("albums").doc(albumsIdsArray[i])
-                const doc = await albumRef.get()
-                if (!doc.exists) {
-                    console.log('No such document!');
-                } else {
-                    albumsDataArray.push(doc.data())
-                    console.log('Document data:', doc.data());
-                }
+
+                const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', temporary)
+                .get()
+
+                console.log(albumsDataSnapshot)
+
+                const mappedAlbums = albumsDataSnapshot.docs.map(doc => {
+                    return doc.data()
+                })
+
+                albumsDataArray.push(mappedAlbums)
+
+                // console.log(mappedAlbums)
+
+                // albumsDataArray.push(albumsDataSnapshot)
+
+                console.log(albumsDataArray.flat())
+
+                // setAlbumsData(albumsDataSnapshot.docs.map(doc => {
+                //     return doc.data()
+                // }))
+
+                setAlbumsData(albumsDataArray.flat())
+
             }
-
-            setAlbumsData(albumsDataArray)
-
-            // const albumRef = db.collection("albums").doc("AuO9i3l3cfrT1xQfts3k")
-            // const doc = await albumRef.get()
-            // if (!doc.exists) {
-            //     console.log('No such document!');
-            //   } else {
-            //     console.log('Document data:', doc.data());
-            //   }
-
-            
-            
-
-
-            // const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', albumIdsArray)
-            // .get()
-
-            // setAlbumsData(albumsDataSnapshot.docs.map(doc => {
-            //     return doc.data()
-            // }))
+           
         }
 
         fetchAlbumsInUserCollection()

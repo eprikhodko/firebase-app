@@ -72,7 +72,7 @@ const Upload = () => {
           year: year,
           albumCover: fileUrl,
           uploadedBy: currentUser.uid,
-          dateUploaded: firebase.firestore.FieldValue.serverTimestamp(),
+          dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
           albumUsers: []
       }
       )
