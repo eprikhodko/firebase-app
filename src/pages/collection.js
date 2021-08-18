@@ -99,6 +99,27 @@ const Collection = () => {
         ) 
     })
 
+    const handleSortByYear = () => {
+
+        const albums = albumsData.map(album => {
+            return album.year
+        })
+
+        const sortedByYear = albumsData.slice(0).sort(function(a,b) {
+            if (a.year > b.year) {
+                return 1
+            } else {
+                return -1
+            }
+        })
+        console.log(albumsData)
+        console.log(albums)
+        console.log(sortedByYear)
+
+        
+        return setAlbumsData(sortedByYear)
+    }
+
     return(
         <div>
             <Header />
@@ -107,6 +128,16 @@ const Collection = () => {
             <div className="container-uploaded-albums-main">
                 <div className="container-uploaded-albums">
                     <h2 className="heading-recently-added-albums">Collection</h2>
+                    <div className="sort-albums">
+                        <h3>Sort by:</h3>
+                        <button 
+                                type="button"
+                                onClick={handleSortByYear}
+                                > 
+                                Year
+                            </button>
+                    </div>
+                    
                     <div className="container-albums">
                         {albumComponents}
                     </div>
