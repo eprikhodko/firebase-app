@@ -25,64 +25,34 @@ const Collection = () => {
 
     useEffect(() => {
         const fetchAlbumsInUserCollection = async() => {
+            // lets fetch albums in user collection
             const snapshot = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
             .orderBy("dateAdded", "desc")
             .get()
 
-            console.log(snapshot)
-            const albumsInUserCollection = snapshot.docs.map(doc => {
-                return doc.data()
-            })
+            // const albumsInUserCollection = snapshot.docs.map(doc => {
+            //     return doc.data()
+            // })
 
-            console.log(albumsInUserCollection)
+            // console.log(albumsInUserCollection)
 
+            // map through albums and return new array with album ids
             const albumsIdsArray = snapshot.docs.map(doc => {
                 return doc.data().albumId
             })
 
             setAlbumsIds(albumsIdsArray)
-
             console.log(albumsIdsArray)
 
-            // const fetchedAlbums = await albumsIdsArray.map(id => {
-            //     return db.collection("albums").where("albumId", "==", id)
-            //     .get()
-            // })
-
-            // console.log(fetchedAlbums)
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-// an old way of retreiving albums collection
-            // const albumsDataArray = []
-
-            // for (let i = 0; i < albumsIdsArray.length; i++) {
-            //     const albumRef = db.collection("albums").doc(albumsIdsArray[i])
-            //     const doc = await albumRef.get()
-            //     if (!doc.exists) {
-            //         console.log('No such document!');
-            //     } else {
-            //         albumsDataArray.push(doc.data())
-            //         console.log('Document data:', doc.data());
-            //     }
-            // }
-
-            // setAlbumsData(albumsDataArray)
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-            
-            
+            // firestore has query limit for 'in' query, so we need to split our albums ids in chunks of 10 items, and then make a query
             const chunk = 10
             const albumsDataArray = []
             for (let i = 0; i < albumsIdsArray.length; i+= chunk) {
-                let temporary = albumsIdsArray.slice(i, i + chunk)
-                console.log(temporary)
+                let temporaryArray = albumsIdsArray.slice(i, i + chunk)
+                console.log(temporaryArray)
 
-
-                const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', temporary)
+                const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', temporaryArray)
                 .get()
-
                 console.log(albumsDataSnapshot)
 
                 const mappedAlbums = albumsDataSnapshot.docs.map(doc => {
@@ -91,24 +61,12 @@ const Collection = () => {
 
                 albumsDataArray.push(mappedAlbums)
 
-                // console.log(mappedAlbums)
-
-                // albumsDataArray.push(albumsDataSnapshot)
-
-                console.log(albumsDataArray.flat())
-
-                // setAlbumsData(albumsDataSnapshot.docs.map(doc => {
-                //     return doc.data()
-                // }))
-
                 setAlbumsData(albumsDataArray.flat())
-
             }
-           
         }
 
         fetchAlbumsInUserCollection()
-       
+
     },[])
 
     console.log(albumsData)
