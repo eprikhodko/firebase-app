@@ -105,17 +105,18 @@ const Collection = () => {
             return album.year
         })
 
-        const sortedByYear = albumsData.slice(0).sort(function(a,b) {
-            if (a.year > b.year) {
-                return 1
-            } else {
-                return -1
-            }
+        const sortedByYear = albumsData.slice().sort((a,b) => {
+            if (a.year < b.year) return -1
+            if (a.year > b.year) return 1
+            return 0
         })
         console.log(albumsData)
         console.log(albums)
         console.log(sortedByYear)
 
+        // const testSortArray = [1,5,10,19,undefined,19,19,25,undefined,19,23,19,24,32,45]
+        // const testSort = testSortArray.sort((a,b) => a > b ? 1 : -1)
+        // console.log(testSortArray)
         
         return setAlbumsData(sortedByYear)
     }
