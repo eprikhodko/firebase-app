@@ -29,7 +29,7 @@ const Collection = () => {
         const fetchAlbumsInUserCollection = async() => {
             // lets fetch albums in user collection
             const snapshot = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
-            .orderBy("dateAdded", "asc")
+            .orderBy("dateAdded", "desc")
             .get()
 
             // const albumsInUserCollection = snapshot.docs.map(doc => {
@@ -44,51 +44,31 @@ const Collection = () => {
             })
 
             setAlbumsIds(albumsIdsArray)
-            console.log("this initial ids array from user collection", albumsIdsArray)
-
-
-            // ok, so how this all works? try to describe it. 
+            // console.log("this initial ids array from user collection", albumsIdsArray)
             
+            // after we got our albums ids from user albums collection, let's fetch albums from "albums" collection with actual albums data.
             // firestore has query limit for 'in' query, so we need to split our albums ids in chunks of 10 items, and then make a query
             const chunk = 10
             const albumsDataArray = []
             for (let i = 0; i < albumsIdsArray.length; i+= chunk) {
                 let temporaryArray = albumsIdsArray.slice(i, i + chunk)
-                // console.log("this is temporary array", temporaryArray)
-
                 const albumsDataSnapshot = await albumsDataRef.where(firebase.firestore.FieldPath.documentId(), 'in', temporaryArray)
                 .get()
-                // console.log("this is albums data snapshot", albumsDataSnapshot)
-                // albumsDataSnapshot.forEach(doc => {
-                //     console.log(doc.data())
-                // })
-
                 const mappedAlbums = albumsDataSnapshot.docs.map(doc => {
                     return doc.data()
                 })
-                // console.log("this is mapped albums", mappedAlbums)
-
                 albumsDataArray.push(mappedAlbums)
 
-               
-
-
                 const flattenedAlbums = albumsDataArray.flat()
-                console.log("this is flattened albums array from firestore", flattenedAlbums )
-                console.log("this is albums Ids", albumsIdsArray)
-
+                // firestore 'where in' query returns a messed up list of album documents, so we need to sort it like it was previously in the user albums collection
                 const sortedAlbums = []
                 for (let i = 0; i < albumsIdsArray.length; i++) {
-                    const found = flattenedAlbums.find(element => element.albumId === albumsIdsArray[i])
-                    // console.log("found", found)
-                    // check for 'undefined' values in
+                    const found = flattenedAlbums.find(album => album.albumId === albumsIdsArray[i])
+                    // if album is NOT undefined, push it to the sortedAlbums array
                     if (found) sortedAlbums.push(found)
                 }
 
-                // console.log("this is sorted albums", sortedAlbums)
                 setSortedByDateAddedToUserCollection(sortedAlbums)
-                console.log("this is sorted albums", sortedAlbums)
-
                 setAlbumsData(sortedAlbums)
             }
         }
@@ -96,14 +76,6 @@ const Collection = () => {
         fetchAlbumsInUserCollection()
 
     },[])
-
-    // console.log(albumsData)
-    const albumIdsFromFirestore = albumsData.map(album => {
-        return album.albumId
-    })
-
-    console.log("this is ids from firestore", albumIdsFromFirestore)
-
 
 
     const albumComponents = albumsData.map(album => {
@@ -135,32 +107,34 @@ const Collection = () => {
     })
 
     const handleSortByYear = () => {
-        const albums = albumsData.map(album => {
-            return album.year
-        })
-
         const sortedByYear = [...albumsData].sort((a,b) => {
-            if (a.year < b.year) return -1
-            if (a.year > b.year) return 1
+            if (a.year > b.year) return -1
+            if (a.year < b.year) return 1
             return 0
         })
-        console.log(albumsData)
-        console.log(albums)
-        console.log(sortedByYear)
-
-        // const testSortArray = [1,5,10,19,undefined,19,19,25,undefined,19,23,19,24,32,45]
-        // const testSort = testSortArray.sort((a,b) => a > b ? 1 : -1)
-        // console.log(testSortArray)
-        
         return setAlbumsData(sortedByYear)
     }
 
     const handleSortByAddedToCollection = () => {
+       return setAlbumsData(sortedByDateAddedToUserCollection)
+    }
 
-        setAlbumsData(sortedByDateAddedToUserCollection)
+    const handleSortByArtist = () => {
+        const sortedByArtist = [...albumsData].sort((a,b) => {
+            if (a.artist < b.artist) return -1
+            if (a.artist > b.artist) return 1
+            return 0
+        })
+       return setAlbumsData(sortedByArtist)
+    }
 
-        console.log("sorted by date added to collection")
-
+    const handleSortByAlbumTitle = () => {
+        const sortedByAlbumTitle = [...albumsData].sort((a,b) => {
+            if (a.albumTitle < b.albumTitle) return -1
+            if (a.albumTitle > b.albumTitle) return 1
+            return 0
+        })
+       return setAlbumsData(sortedByAlbumTitle)
     }
 
     return(
@@ -173,17 +147,33 @@ const Collection = () => {
                     <h2 className="heading-recently-added-albums">Collection</h2>
                     <div className="sort-albums">
                         <h3>Sort by:</h3>
+
                         <button 
                                 type="button"
                                 onClick={handleSortByYear}
                                 > 
                                 Year
                         </button>
+
                         <button 
                                 type="button"
                                 onClick={handleSortByAddedToCollection}
                                 > 
                                 Added to collection
+                        </button>
+
+                        <button 
+                                type="button"
+                                onClick={handleSortByArtist}
+                                > 
+                                Artist
+                        </button>
+
+                        <button 
+                                type="button"
+                                onClick={handleSortByAlbumTitle}
+                                > 
+                                Album
                         </button>
                     </div>
                     
