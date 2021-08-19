@@ -46,6 +46,9 @@ const Collection = () => {
             setAlbumsIds(albumsIdsArray)
             console.log("this initial ids array from user collection", albumsIdsArray)
 
+
+            // ok, so how this all works? try to describe it. 
+            
             // firestore has query limit for 'in' query, so we need to split our albums ids in chunks of 10 items, and then make a query
             const chunk = 10
             const albumsDataArray = []
@@ -78,16 +81,15 @@ const Collection = () => {
                 for (let i = 0; i < albumsIdsArray.length; i++) {
                     const found = flattenedAlbums.find(element => element.albumId === albumsIdsArray[i])
                     // console.log("found", found)
-                    sortedAlbums.push(found)
+                    // check for 'undefined' values in
+                    if (found) sortedAlbums.push(found)
                 }
 
                 // console.log("this is sorted albums", sortedAlbums)
                 setSortedByDateAddedToUserCollection(sortedAlbums)
                 console.log("this is sorted albums", sortedAlbums)
-                // console.log("this is last album in sorted albums array", sortedAlbums[sortedAlbums.length-1])
 
-                sortedAlbums[sortedAlbums.length-1] && setAlbumsData(sortedAlbums)
-                // setSortedByDateAddedToUserCollection(albumsDataArray.flat())
+                setAlbumsData(sortedAlbums)
             }
         }
 
