@@ -5,6 +5,7 @@ import UserContext from "../context/user"
 import FirebaseContext from "../context/firebase"
 
 import Header from "../components/Header"
+import NavbarUserProfile from "../components/NavbarUserProfile"
 
 import "../styles/upload.css"
 
@@ -147,6 +148,9 @@ const Upload = () => {
         <Header />
         <div className="container-upload-main">
             <div className="container-upload">
+              
+              <NavbarUserProfile />
+
                 <h2 className="heading-upload-album">Upload album to the database</h2>
                 <form onSubmit={handleSubmit} className="form-upload">  
                   <label>
