@@ -1,11 +1,13 @@
 import {useContext, useState, useEffect} from "react"
 
+import * as ROUTES from "../constants/routes"
 import {Link} from "react-router-dom"
 
 import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
 
 import Header from "../components/Header"
+import NavbarUserProfile from "../components/NavbarUserProfile"
 
 import "../styles/collection.css"
 
@@ -140,11 +142,13 @@ const Collection = () => {
     return(
         <div>
             <Header />
-            <div>this is collection of {currentUser.displayName}</div>
-
+            <h2 className="heading-recently-added-albums">this is collection of {currentUser.displayName}</h2>
+           
             <div className="container-uploaded-albums-main">
                 <div className="container-uploaded-albums">
-                    <h2 className="heading-recently-added-albums">Collection</h2>
+
+                <NavbarUserProfile />
+                
                     <div className="sort-albums">
                         <h3>Sort by:</h3>
 
@@ -173,7 +177,7 @@ const Collection = () => {
                                 type="button"
                                 onClick={handleSortByAlbumTitle}
                                 > 
-                                Album
+                                Album Title
                         </button>
                     </div>
                     

@@ -53,6 +53,15 @@ const Header = () => {
                                 </button>
                             </Link>
 
+                            <Link to={`/collection/${currentUser.displayName}`}>
+                                <button
+                                    type="button"
+                                    className=""
+                                >
+                                    My Collection
+                                </button>
+                            </Link>
+
                             <Link to={ROUTES.UPLOAD}>
                                 <button
                                     type="button"
