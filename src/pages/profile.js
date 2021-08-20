@@ -42,8 +42,7 @@ const Profile = () => {
 
     },[])
 
-    console.log(userData)
-
+    console.log(userData.dateCreated)
 
     return(
         <div>
@@ -54,7 +53,10 @@ const Profile = () => {
             <div>
                 <p>user info:</p>
                 <p>{currentUser.displayName}</p>
-                <p>joined: {!isLoading && new Date(userData.dateCreated.seconds * 1000).toLocaleDateString("ru-RU")}</p>
+                <p>joined: {!isLoading && new Date(userData.dateCreated.seconds * 1000).toDateString().slice(4)}</p>
+                {/* another way to show date */}
+                <p>joined: {!isLoading && new Date(userData.dateCreated.seconds * 1000).toDateString().split(" ").slice(1)
+        .join(" ")}</p>
             </div>
         </div>
     )
