@@ -37,8 +37,7 @@ const App = () => {
             </Switch>
       </Router>
     </UserContext.Provider>
-    
   )
 }
 
-export default App;
+export default App

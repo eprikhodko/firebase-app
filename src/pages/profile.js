@@ -14,6 +14,7 @@ const Profile = () => {
     const {firebase} = useContext(FirebaseContext)
 
     const [userData, setUserData] = useState([])
+    const [albumsCountInUserCollection, setAlbumsCountInUserCollection] = useState("")
     const [isLoading, setIsLoading] = useState(true)
 
     // create reference to the Firestore database
@@ -40,9 +41,21 @@ const Profile = () => {
 
         fetchUserData()
 
-    },[])
+        const fetchAlbumsCountInUserCollection = async () => {
+            try {
+                const res = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
+                .get()
+                setAlbumsCountInUserCollection(res.size)
+                console.log(res.size)
+            } catch (error) {
+                console.log(error)
+            }
+        }
 
-    console.log(userData.dateCreated)
+        fetchAlbumsCountInUserCollection()
+
+
+    },[])
 
     return(
         <div>
@@ -54,9 +67,10 @@ const Profile = () => {
                 <p>user info:</p>
                 <p>{currentUser.displayName}</p>
                 <p>joined: {!isLoading && new Date(userData.dateCreated.seconds * 1000).toDateString().slice(4)}</p>
-                {/* another way to show date */}
-                <p>joined: {!isLoading && new Date(userData.dateCreated.seconds * 1000).toDateString().split(" ").slice(1)
-        .join(" ")}</p>
+                <p>Releases</p>
+                <Link to={`/collection/${currentUser.displayName}`}>
+                    <p>In collection: {albumsCountInUserCollection}</p>
+                </Link>
             </div>
         </div>
     )
