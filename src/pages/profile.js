@@ -15,6 +15,7 @@ const Profile = () => {
 
     const [userData, setUserData] = useState([])
     const [albumsCountInUserCollection, setAlbumsCountInUserCollection] = useState("")
+    const [albumsUploadedByUser, setAlbumsUploadedByUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
 
     // create reference to the Firestore database
@@ -46,7 +47,6 @@ const Profile = () => {
                 const res = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
                 .get()
                 setAlbumsCountInUserCollection(res.size)
-                console.log(res.size)
             } catch (error) {
                 console.log(error)
             }
@@ -54,6 +54,17 @@ const Profile = () => {
 
         fetchAlbumsCountInUserCollection()
 
+        const fetchAlbumsUploadedByUser = async () => {
+            try {
+                const res = await db.collection("albums").where("uploadedBy", '==', currentUser.uid)
+                .get()
+                setAlbumsUploadedByUser(res.size)
+            } catch (error) {
+               console.log(error) 
+            }
+        }
+
+        fetchAlbumsUploadedByUser()
 
     },[])
 
@@ -70,6 +81,9 @@ const Profile = () => {
                 <p>Releases</p>
                 <Link to={`/collection/${currentUser.displayName}`}>
                     <p>In collection: {albumsCountInUserCollection}</p>
+                </Link>
+                <Link to={`/uploaded-by/${currentUser.displayName}`}>
+                    <p>Uploaded: {albumsUploadedByUser}</p>
                 </Link>
             </div>
         </div>
