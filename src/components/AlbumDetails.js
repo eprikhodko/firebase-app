@@ -34,6 +34,7 @@ const AlbumDetails = () => {
     const {albumCover, artist, year, albumTitle} = albumData
 
     const [isInCollection, setIsInCollection] = useState(false)
+    const [isAlbumUploadedByCurrentUser, setIsAlbumUploadedByCurrentUser] = useState(false)
 
     const [albumIdInUserAlbumsCollection, setAlbumIdInUserAlbumsCollection] = useState(null)
     
@@ -66,12 +67,42 @@ const AlbumDetails = () => {
             })
         }
 
+        const checkIfAlbumIsUploadedByCurrentUser = () => {
+            
+            if (albumData.uploadedBy === currentUser.uid) {
+                console.log("albums is uploaded by current user")
+                return true
+            } else {
+                console.log("albums is not uploaded by current user")
+                return false
+            }
+            console.log("check if album is uploaded by current user", albumData.uploadedBy)
+        }
+
+        // checkIfAlbumIsUploadedByCurrentUser()
+
         // run this function only if user is logged in, or it will throw an error, because currentUser.uid will be null
        currentUser && checkIfAlbumIsInUserCollection()
 
         console.log(isInCollection)
 
     },[])
+
+    useEffect(() => {
+        const checkIfAlbumIsUploadedByCurrentUser = () => {
+            
+            if (albumData.uploadedBy === currentUser.uid) {
+                console.log("albums is uploaded by current user")
+                return setIsAlbumUploadedByCurrentUser(true)
+            } else {
+                console.log("albums is not uploaded by current user")
+                return setIsAlbumUploadedByCurrentUser(false)
+            }
+        }
+
+        checkIfAlbumIsUploadedByCurrentUser()
+        
+    },[albumData])
 
     const handleAddToCollection = async() => {
         const res = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")

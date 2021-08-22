@@ -142,13 +142,14 @@ const Collection = () => {
     return(
         <div>
             <Header />
-            <h2 className="heading-recently-added-albums">this is collection of {currentUser.displayName}</h2>
            
             <div className="container-uploaded-albums-main">
                 <div className="container-uploaded-albums">
 
                 <NavbarUserProfile />
-                
+
+                <h2 className="heading-recently-added-albums">this is collection of {currentUser.displayName}</h2>
+
                     <div className="sort-albums">
                         <h3>Sort by:</h3>
 
