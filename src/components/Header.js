@@ -37,7 +37,7 @@ const Header = () => {
                             // value={query} 
                             // onChange={handleChange}
                         />
-                        {/* <button className="button-search" type="submit">Search</button> */}
+                        <button className="button-search" type="submit">Search</button>
                     </form>
                 </div>
                 

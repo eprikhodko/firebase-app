@@ -1,7 +1,9 @@
 import {useEffect, useState, useContext} from "react"
-import {useParams} from "react-router-dom"
+import {useParams, useHistory} from "react-router-dom"
 import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
+
+import * as ROUTES from "../constants/routes"
 
 import Header from "../components/Header"
 
@@ -11,6 +13,8 @@ const AlbumDetails = () => {
 
     const currentUser = useContext(UserContext)
     // const currentUser = null
+
+    const history = useHistory()
 
     const params = useParams()
     // console.log(params)
@@ -110,21 +114,11 @@ const AlbumDetails = () => {
         setIsInCollection(false)
     }
 
-    const AddToCollection = async() => {
-        const album = await db.collection("albums").doc(albumId)
-        album.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
-        setIsInCollection(true)
-    }
-
-    const RemoveFromCollection = async() => {
-        const album = await db.collection("albums").doc(albumId)
-        album.update({albumUsers: firebase.firestore.FieldValue.arrayRemove(currentUser.uid)})
-        setIsInCollection(false)
-    }
-
     const handleRemoveFromDatabase = async () => {
         try {
             const res = await db.collection("albums").doc(albumData.albumId).delete()
+            console.log("albums was removed from the firestore database")
+            history.push(`/uploaded-by/${currentUser.displayName}`)
         } catch (error) {
             console.log(error)
         }
