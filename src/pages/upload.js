@@ -74,21 +74,16 @@ const Upload = () => {
           albumCover: fileUrl,
           uploadedBy: currentUser.uid,
           dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
-          albumUsers: []
       }
       )
       console.log(newAlbumRef.id)
 
-      // <<-- Get and Read data in Firestore -->>
-      // check Get data chapter in Firebase docs
-      // https://firebase.google.com/docs/firestore/query-data/get-data
-
-      // create reference for an album document we're created above
-      const createdAlbumRef = await db.collection("albums").doc(newAlbumRef.id)
-
-      // <<-- Update a document in Firestore -->>
-      // add album to user collection by updating albumUsers field in Firestore if user checked 'add this album to my collection' checkbox
-      addToUserCollection && createdAlbumRef.update({albumUsers: firebase.firestore.FieldValue.arrayUnion(currentUser.uid)})
+      // add album to user collection if user checked 'add this album to my collection' checkbox
+      addToUserCollection && db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
+      .add({
+        albumId: newAlbumRef.id,
+        dateAdded: firebase.firestore.FieldValue.serverTimestamp()
+      })
     }
 
     albumTitle && createNewAlbum()
@@ -148,7 +143,7 @@ const Upload = () => {
         <Header />
         <div className="container-upload-main">
             <div className="container-upload">
-              
+
               <NavbarUserProfile />
 
                 <h2 className="heading-upload-album">Upload album to the database</h2>

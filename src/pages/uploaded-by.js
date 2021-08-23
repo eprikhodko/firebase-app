@@ -22,6 +22,7 @@ const UploadedBy = () => {
         const fetchAlbumsUploadedByUser = async () => {
             try {
                 const res = await db.collection("albums").where("uploadedBy", '==', currentUser.uid)
+                .orderBy("dateCreated", "desc")
                 .get()
                 const albums = res.docs.map(doc => {
                     return doc.data()
@@ -33,7 +34,10 @@ const UploadedBy = () => {
         }
 
         fetchAlbumsUploadedByUser()
+
     }, [])
+
+    console.log(albumsData)
 
     const albumComponents = albumsData.map(album => {
         return(

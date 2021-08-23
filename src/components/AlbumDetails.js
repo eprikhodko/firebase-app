@@ -67,22 +67,8 @@ const AlbumDetails = () => {
             })
         }
 
-        const checkIfAlbumIsUploadedByCurrentUser = () => {
-            
-            if (albumData.uploadedBy === currentUser.uid) {
-                console.log("albums is uploaded by current user")
-                return true
-            } else {
-                console.log("albums is not uploaded by current user")
-                return false
-            }
-            console.log("check if album is uploaded by current user", albumData.uploadedBy)
-        }
-
-        // checkIfAlbumIsUploadedByCurrentUser()
-
         // run this function only if user is logged in, or it will throw an error, because currentUser.uid will be null
-       currentUser && checkIfAlbumIsInUserCollection()
+        currentUser && checkIfAlbumIsInUserCollection()
 
         console.log(isInCollection)
 
@@ -101,8 +87,10 @@ const AlbumDetails = () => {
         }
 
         checkIfAlbumIsUploadedByCurrentUser()
-        
+
     },[albumData])
+
+    console.log("album uploaded by current user?", isAlbumUploadedByCurrentUser)
 
     const handleAddToCollection = async() => {
         const res = await db.collection("users").doc(currentUser.uid).collection("albumsInUserCollection")
@@ -134,6 +122,13 @@ const AlbumDetails = () => {
         setIsInCollection(false)
     }
 
+    const handleRemoveFromDatabase = async () => {
+        try {
+            const res = await db.collection("albums").doc(albumData.albumId).delete()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const albumButtons = 
     // check if album data is loaded. If it is loaded, then proceed to show a paragraph or buttons to add or remove album from collection
@@ -153,6 +148,8 @@ const AlbumDetails = () => {
             >
                 Add to collection
             </button>
+
+            
 
     const albumBtns = () => {
         if (!currentUser) {
@@ -183,6 +180,13 @@ const AlbumDetails = () => {
                     }
                     
                     {albumButtons}
+                    {isAlbumUploadedByCurrentUser && 
+                    <button
+                        type="button"
+                        onClick={handleRemoveFromDatabase}
+                    >
+                        Remove album from database
+                    </button> }
                 </div>
             </div>
         </div>
