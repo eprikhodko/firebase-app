@@ -42,7 +42,7 @@ const Upload = () => {
       // create storage reference from our storage service
       const storageRef = storage.ref()
       // create child reference
-      const fileReference = storageRef.child(file.name)
+      const fileReference = storageRef.child(`album-covers/${file.name}`)
       // upload file from form input to the firebase Storage
       await fileReference.put(file)
       // after we're uploaded our file to the firebase Storage, we need to get an URL to this file. We will need this fileUrl later, when we will be creating user record with the username and avatar. We need to store this url in the state. 
@@ -98,28 +98,25 @@ const Upload = () => {
 
     setFileUrl(null)
     albumTitle && setIsSubmitted(true)
-      
-    // albumTitle && db.collection("albums").doc(albumTitle).set({
-    //     name: albumTitle,
-    //     albumCover: fileUrl
-    // })
 
     fileUrl && console.log("file uploaded")
   }
 
-  useEffect(() => {
-    const fetchAlbumItems = async() => {
-        const albumsCollection = await db.collection("albums").get()
-        setAlbumsCollection(albumsCollection.docs.map(doc => {
-            return doc.data()
-        }))
-    }
+  // looks like I made this part to show already uploaded albums to the database. 
 
-    fetchAlbumItems()
+  // useEffect(() => {
+  //   const fetchAlbumItems = async() => {
+  //       const albumsCollection = await db.collection("albums").get()
+  //       setAlbumsCollection(albumsCollection.docs.map(doc => {
+  //           return doc.data()
+  //       }))
+  //   }
 
-    setIsSubmitted(false)
+  //   fetchAlbumItems()
 
-  },[isSubmitted])
+  //   setIsSubmitted(false)
+
+  // },[isSubmitted])
 
   console.log(isSubmitted)
 

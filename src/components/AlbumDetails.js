@@ -117,7 +117,7 @@ const AlbumDetails = () => {
     const handleRemoveFromDatabase = async () => {
         try {
             const res = await db.collection("albums").doc(albumData.albumId).delete()
-            console.log("albums was removed from the firestore database")
+            console.log("album was removed from the firestore database")
             history.push(`/uploaded-by/${currentUser.displayName}`)
         } catch (error) {
             console.log(error)
@@ -155,6 +155,12 @@ const AlbumDetails = () => {
             return <button>Add to collection</button>
         }
     }
+
+    console.log(albumData.albumCover)
+
+    const storage = firebase.storage()
+    // const httpsReference = storage.refFromURL(albumData.albumCover)
+    // console.log(httpsReference)
 
     return(
         <div>
