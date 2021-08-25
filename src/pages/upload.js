@@ -14,6 +14,7 @@ const Upload = () => {
   const {firebase} = useContext(FirebaseContext)
 
   const [fileUrl, setFileUrl] = useState(null)
+  const [fileName, setFileName] = useState("")
   const [albumsCollection, setAlbumsCollection] = useState([])
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [albumInfo, setAlbumInfo] = useState({
@@ -43,15 +44,18 @@ const Upload = () => {
       const storageRef = storage.ref()
       // create child reference
       const fileReference = storageRef.child(`album-covers/${file.name}`)
+      console.log(file.name)
       // upload file from form input to the firebase Storage
       await fileReference.put(file)
       // after we're uploaded our file to the firebase Storage, we need to get an URL to this file. We will need this fileUrl later, when we will be creating user record with the username and avatar. We need to store this url in the state. 
       const fileUrl = await fileReference.getDownloadURL()
       // save URL in the state
       setFileUrl(fileUrl)
+      setFileName(file.name)
   }
 
   console.log(fileUrl)
+  console.log("this is filename:", fileName)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -72,6 +76,7 @@ const Upload = () => {
           artist: artist,
           year: year,
           albumCover: fileUrl,
+          albumCoverFileName: fileName,
           uploadedBy: currentUser.uid,
           dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
       }

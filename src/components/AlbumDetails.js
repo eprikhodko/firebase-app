@@ -116,7 +116,14 @@ const AlbumDetails = () => {
 
     const handleRemoveFromDatabase = async () => {
         try {
-            const res = await db.collection("albums").doc(albumData.albumId).delete()
+            // remove album document from firestore
+            const removeAlbum = await db.collection("albums").doc(albumData.albumId).delete()
+
+            // remove album cover image from firebase storage
+            const storage = firebase.storage()
+            const pathReference = storage.ref(`album-covers/${albumData.albumCoverFileName}`)
+            const removeAlbumCover = await pathReference.delete()
+
             console.log("album was removed from the firestore database")
             history.push(`/uploaded-by/${currentUser.displayName}`)
         } catch (error) {
@@ -156,11 +163,23 @@ const AlbumDetails = () => {
         }
     }
 
-    console.log(albumData.albumCover)
+    // console.log(albumData.albumCover)
+    // console.log(albumData.albumCoverFileName)
 
     const storage = firebase.storage()
-    // const httpsReference = storage.refFromURL(albumData.albumCover)
-    // console.log(httpsReference)
+    const pathReference = storage.ref(`album-covers/${albumData.albumCoverFileName}`)
+    // console.log(pathReference)
+
+    const deleteFile = async () => {
+        try {
+            const res = await pathReference.delete()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    // deleteFile()
+
 
     return(
         <div>
