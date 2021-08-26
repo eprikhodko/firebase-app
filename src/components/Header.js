@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import {Link} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
 import * as ROUTES from "../constants/routes"
@@ -12,6 +12,13 @@ const Header = () => {
     // const {user} = useContext(UserContext)
     const currentUser = useContext(UserContext)
     // console.log(currentUser.displayName)
+
+    const history = useHistory()
+
+    const handleSearchSubmit = () => {
+        history.push(ROUTES.SEARCH_RESULTS)
+        console.log("search")
+    }
     
     return (
         <header className="header">
@@ -27,11 +34,12 @@ const Header = () => {
                         <p className="header__logo">MusicDB</p>
                     </Link>
 
-                    <form className="header__form-search" onSubmit={() => console.log("search")}>
+                    {/* search */}
+                    <form className="header__form-search" onSubmit={handleSearchSubmit}>
                         {/* <label className="label" htmlFor="query">Movie Name</label> */}
                         <input 
                             className="header__input-search" 
-                            type="text" 
+                            type="search" 
                             name="query"
                             placeholder="search" 
                             // value={query} 
@@ -41,6 +49,7 @@ const Header = () => {
                     </form>
                 </div>
                 
+
                 <div className="header__container-buttons">
                     {currentUser ? (
                         < >
