@@ -7,6 +7,8 @@ import * as ROUTES from "../constants/routes"
 import logo from "../img/logo-music-database-theme-dark.png"
 import "../styles/Header.css"
 
+import SearchInput from "./Search/SearchInput"
+
 const Header = () => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
@@ -14,11 +16,6 @@ const Header = () => {
     // console.log(currentUser.displayName)
 
     const history = useHistory()
-
-    const handleSearchSubmit = () => {
-        history.push(ROUTES.SEARCH_RESULTS)
-        console.log("search")
-    }
     
     return (
         <header className="header">
@@ -34,19 +31,8 @@ const Header = () => {
                         <p className="header__logo">MusicDB</p>
                     </Link>
 
-                    {/* search */}
-                    <form className="header__form-search" onSubmit={handleSearchSubmit}>
-                        {/* <label className="label" htmlFor="query">Movie Name</label> */}
-                        <input 
-                            className="header__input-search" 
-                            type="search" 
-                            name="query"
-                            placeholder="search" 
-                            // value={query} 
-                            // onChange={handleChange}
-                        />
-                        <button className="button-search" type="submit">Search</button>
-                    </form>
+                  <SearchInput />
+
                 </div>
                 
 

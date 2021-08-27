@@ -14,7 +14,7 @@ import AlbumDetails from "./components/AlbumDetails"
 import Profile from "./pages/profile"
 import UploadedBy from "./pages/uploaded-by"
 import Collection from "./pages/collection"
-import SearchResults from "./pages/search-results"
+import Search from "./pages/search"
 import NotFound from "./pages/not-found"
 
 import useAuthListener from "./hooks/useAuthListener"
@@ -36,7 +36,7 @@ const App = () => {
               <Route path={ROUTES.PROFILE} component={Profile} />
               <Route path={ROUTES.COLLECTION} component={Collection} />
               <Route path={ROUTES.UPLOADED_BY} component={UploadedBy} />
-              <Route path={ROUTES.SEARCH_RESULTS} component={SearchResults} />
+              <Route path={ROUTES.SEARCH} component={Search} />
               <Route path={ROUTES.NOT_FOUND} component={NotFound} />
 
             </Switch>

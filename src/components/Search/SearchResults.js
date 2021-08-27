@@ -1,7 +1,8 @@
 const SearchResults = () => {
+
     return (
         <div>
-            <h2>this is search results page</h2>
+            <h3>Here goes search results</h3>
         </div>
     )
 }
