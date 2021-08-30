@@ -1,7 +1,10 @@
 import React, { useContext } from "react"
 import {Link, useHistory} from "react-router-dom"
+
 import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
+import AlbumsContext from "../context/albums"
+
 import * as ROUTES from "../constants/routes"
 
 import logo from "../img/logo-music-database-theme-dark.png"
@@ -14,9 +17,28 @@ const Header = () => {
     // const {user} = useContext(UserContext)
     const currentUser = useContext(UserContext)
     // console.log(currentUser.displayName)
+    const {setAlbumsCollection} = useContext(AlbumsContext)
 
     const history = useHistory()
     
+    const handleUpdateAlbumsContext = () => {
+
+        const fetchAlbums = async() => {
+            const albumsCollection = await firebase.firestore().collection("albums")
+            .orderBy("dateCreated", "desc")
+            .get()
+            // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
+           const albums = albumsCollection.docs.map(doc => {
+                return {...doc.data(), albumId: doc.id}
+            })
+        
+            setAlbumsCollection(albums)
+        }
+    
+        fetchAlbums()
+        console.log("albums context updated")
+    }
+
     return (
         <header className="header">
             <div className="header__container">
@@ -32,6 +54,13 @@ const Header = () => {
                     </Link>
 
                   <SearchInput />
+
+                  <button 
+                        type="button"
+                        onClick={handleUpdateAlbumsContext}
+                        > 
+                        Update Context
+                  </button>
 
                 </div>
                 

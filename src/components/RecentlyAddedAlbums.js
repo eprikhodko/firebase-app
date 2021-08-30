@@ -1,39 +1,14 @@
-import {useState, useEffect, useContext} from "react"
+import { useContext } from "react"
 import * as ROUTES from "../constants/routes"
 import {Link} from "react-router-dom"
-import FirebaseContext from "../context/firebase"
+
+import AlbumsContext from "../context/albums"
 
 import "../styles/RecentlyAddedAlbums.css"
 
 const RecentlyAddedAlbums = () => {
 
-    const [albumsCollection, setAlbumsCollection] = useState([])
-
-    const {firebase} = useContext(FirebaseContext)
-
-    // create reference to the Firestore database
-    const db = firebase.firestore()
-
-    // fetch albums collection from Firestore
-     useEffect(() => {
-        const fetchAlbums = async() => {
-            const albumsCollection = await db.collection("albums")
-            .orderBy("dateCreated", "desc")
-            .get()
-            // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
-            setAlbumsCollection(albumsCollection.docs.map(doc => {
-                return {...doc.data(), albumId: doc.id}
-            }))
-            // console.log(albumsCollection)
-            // console.log(albumsCollection.docs)
-            // console.log(albumsCollection.docs[0].id)
-        }
-     
-        fetchAlbums()
-    
-    },[])
-
-    console.log(albumsCollection)
+    const {albumsCollection} = useContext(AlbumsContext)
 
     const albumComponents = albumsCollection.map(album => {
         return(
@@ -72,9 +47,7 @@ const RecentlyAddedAlbums = () => {
                     {albumComponents}
                 </div>
             </div>
-        </div>
-        
-       
+        </div> 
     )
 }
 

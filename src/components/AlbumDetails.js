@@ -1,7 +1,9 @@
 import {useEffect, useState, useContext} from "react"
 import {useParams, useHistory} from "react-router-dom"
+
 import FirebaseContext from "../context/firebase"
 import UserContext from "../context/user"
+import AlbumsContext from "../context/albums"
 
 import * as ROUTES from "../constants/routes"
 
@@ -23,6 +25,7 @@ const AlbumDetails = () => {
     // console.log(albumId)
 
     const {firebase} = useContext(FirebaseContext)
+    const {setAlbumsCollection} = useContext(AlbumsContext)
 
     // create reference to the Firestore database
     const db = firebase.firestore()
@@ -125,10 +128,29 @@ const AlbumDetails = () => {
             const removeAlbumCover = await pathReference.delete()
 
             console.log("album was removed from the firestore database")
+            handleUpdateAlbumsContext()
             history.push(`/uploaded-by/${currentUser.displayName}`)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleUpdateAlbumsContext = () => {
+
+        const fetchAlbums = async() => {
+            const albumsCollection = await firebase.firestore().collection("albums")
+            .orderBy("dateCreated", "desc")
+            .get()
+            // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
+           const albums = albumsCollection.docs.map(doc => {
+                return {...doc.data(), albumId: doc.id}
+            })
+        
+            setAlbumsCollection(albums)
+        }
+    
+        fetchAlbums()
+        console.log("albums context updated")
     }
 
     const albumButtons = 

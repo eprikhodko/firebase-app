@@ -1,38 +1,28 @@
-import {useState, useEffect, useContext} from "react"
+import { useContext } from "react"
 import * as ROUTES from "../constants/routes"
 import {Link} from "react-router-dom"
-import FirebaseContext from "../context/firebase"
 
 import {ReactComponent as IconArrow} from "../icons/arrow-right.svg"
+
+import AlbumsContext from "../context/albums"
 
 import "../styles/FeaturedAlbums.css"
 
 const FeaturedAlbums = () => {
-    const [albumsCollection, setAlbumsCollection] = useState([])
 
-    const {firebase} = useContext(FirebaseContext)
-
-    // create reference to the Firestore database
-    const db = firebase.firestore()
-
-    // fetch albums collection from Firestore
-     useEffect(() => {
-        const fetchAlbums = async() => {
-            const albumsCollection = await db.collection("albums").get()
-            // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
-            setAlbumsCollection(albumsCollection.docs.map(doc => {
-                return {...doc.data(), albumId: doc.id}
-            }))
-            // console.log(albumsCollection)
-            // console.log(albumsCollection.docs)
-            // console.log(albumsCollection.docs[0].id)
-        }
-     
-        fetchAlbums()
+    // const albumsCollection = useContext(AlbumsContext)
+    const {albumsCollection} = useContext(AlbumsContext)
     
-    },[])
+ 
+    // console.log(AlbumsContext)
+    // console.log("this is albums context", AlbumsContext._currentValue)
+    // console.log(AlbumsContext._currentValue.albumsCollection)
 
-    // console.log(albumsCollection.slice(10))
+    // console.log(albumsCollection)
+
+    // console.log(AlbumsContext._currentValue.setAlbumsCollection)
+    
+
 
     const albumComponents = albumsCollection.slice(12).map((album, index) => {
         return(
@@ -66,7 +56,6 @@ const FeaturedAlbums = () => {
             <div className="featured-albums">
                 {albumComponents}
             </div>
-            {/* <div>this is featured albums</div> */}
             <IconArrow className="arrow"/>
         </div>
     )

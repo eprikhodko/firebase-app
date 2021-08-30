@@ -1,7 +1,8 @@
-const SearchInput = () => {
+const SearchInput = ({albumsCollection}) => {
 
     const handleSearchSubmit = () => {
         console.log("search")
+        console.log("this is albums collection that was passed to the search input as a props", albumsCollection)
     }
 
     return (
@@ -19,7 +20,6 @@ const SearchInput = () => {
                 <button className="button-search" type="submit">Search</button>
             </form>
         </div>
-       
     )    
 }
 

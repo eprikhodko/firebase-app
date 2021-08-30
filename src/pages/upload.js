@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from "react"
 // import firebase from "firebase/app"
 import UserContext from "../context/user"
 import FirebaseContext from "../context/firebase"
+import AlbumsContext from "../context/albums"
 
 import Header from "../components/Header"
 import NavbarUserProfile from "../components/NavbarUserProfile"
@@ -12,10 +13,11 @@ import "../styles/upload.css"
 const Upload = () => {
 
   const {firebase} = useContext(FirebaseContext)
+  const {setAlbumsCollection} = useContext(AlbumsContext)
 
   const [fileUrl, setFileUrl] = useState(null)
   const [fileName, setFileName] = useState("")
-  const [albumsCollection, setAlbumsCollection] = useState([])
+  // const [albumsCollection, setAlbumsCollection] = useState([])
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [albumInfo, setAlbumInfo] = useState({
     albumTitle: "",
@@ -104,8 +106,28 @@ const Upload = () => {
     setFileUrl(null)
     albumTitle && setIsSubmitted(true)
 
+    handleUpdateAlbumsContext()
+
     fileUrl && console.log("file uploaded")
   }
+
+  const handleUpdateAlbumsContext = () => {
+
+    const fetchAlbums = async() => {
+        const albumsCollection = await firebase.firestore().collection("albums")
+        .orderBy("dateCreated", "desc")
+        .get()
+        // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
+       const albums = albumsCollection.docs.map(doc => {
+            return {...doc.data(), albumId: doc.id}
+        })
+        setAlbumsCollection(albums)
+    }
+
+    fetchAlbums()
+
+    console.log("albums context updated")
+}
 
   // looks like I made this part to show already uploaded albums to the database. 
 
