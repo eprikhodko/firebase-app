@@ -1,21 +1,27 @@
-const SearchInput = ({albumsCollection}) => {
+import { useState } from "react"
 
-    const handleSearchSubmit = () => {
-        console.log("search")
-        console.log("this is albums collection that was passed to the search input as a props", albumsCollection)
+const SearchInput = () => {
+
+    const [searchQuery, setSearchQuery] = useState("")
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault()
+        console.log("search this:", searchQuery)
     }
+
+    console.log("this is input value:", searchQuery)
 
     return (
         <div>
             <form className="header__form-search" onSubmit={handleSearchSubmit}>
-                {/* <label className="label" htmlFor="query">Movie Name</label> */}
+                {/* <label className="label" htmlFor="query"></label> */}
                 <input 
                     className="header__input-search" 
                     type="search" 
                     name="query"
                     placeholder="search" 
-                    // value={query} 
-                    // onChange={handleChange}
+                    value={searchQuery} 
+                    onChange={(event) => setSearchQuery(event.target.value)}
                 />
                 <button className="button-search" type="submit">Search</button>
             </form>
