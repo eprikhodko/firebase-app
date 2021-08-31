@@ -28,7 +28,7 @@ const App = () => {
   const {firebase} = useContext(FirebaseContext)
 
   const [albumsCollection, setAlbumsCollection] = useState([])
-  const value = {albumsCollection, setAlbumsCollection}
+  const albumsValue = {albumsCollection, setAlbumsCollection}
 
   // create reference to the Firestore database
   const db = firebase.firestore()
@@ -53,17 +53,17 @@ const App = () => {
 
   console.log("albums fetched by App component")
 
+  // this is lifted up state from search input component
   const [searchQuery, setSearchQuery] = useState("")
   const searchInput = {searchQuery, setSearchQuery}
 
-  // console.log(searchInput)
-
   return(
     <UserContext.Provider value = {currentUser}>
-        <AlbumsContext.Provider value = {value}>
+        <AlbumsContext.Provider value = {albumsValue}>
           <Router>
               <Switch>
                 {/* <Route path={ROUTES.HOME} component ={Home} exact /> */}
+                {/* https://ui.dev/react-router-v5-pass-props-to-components/ */}
                 <Route path={ROUTES.HOME} exact>
                   <Home searchInput={searchInput}/>
                 </Route>
