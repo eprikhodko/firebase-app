@@ -1,8 +1,9 @@
 import { useState } from "react"
 
 import { useHistory } from "react-router"
+import * as ROUTES from "../../constants/routes"
 
-const SearchInput = ({searchInput}) => {
+const SearchBox = ({searchInput}) => {
 
     // https://stackoverflow.com/questions/48433008/js-es6-destructuring-of-undefined
     // here we're using "Short-circuit evaluation", https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_OR#short-circuit_evaluation
@@ -12,12 +13,16 @@ const SearchInput = ({searchInput}) => {
 
     const handleSearchSubmit = (event) => {
         event.preventDefault()
-        history.push(`/search`)
-        // console.log("search this:", searchQuery)
+        // if (searchQuery !== "") {
+        //     history.push(`/search`)
+        // } else {
+        //     history.push("/not-found")
+        // }
+
+        history.push("/search")
     }
 
-    // console.log("this is input value:", searchQuery)
-
+    console.log("this is input value:", searchQuery)
 
     return (
         <div>
@@ -37,4 +42,4 @@ const SearchInput = ({searchInput}) => {
     )    
 }
 
-export default SearchInput
+export default SearchBox

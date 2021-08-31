@@ -10,7 +10,7 @@ import * as ROUTES from "../constants/routes"
 import logo from "../img/logo-music-database-theme-dark.png"
 import "../styles/Header.css"
 
-import SearchInput from "./Search/SearchInput"
+import SearchBox from "./Search/SearchBox"
 
 const Header = ({searchInput}) => {
     const {firebase} = useContext(FirebaseContext)
@@ -55,7 +55,7 @@ const Header = ({searchInput}) => {
                         <p className="header__logo">MusicDB</p>
                     </Link>
 
-                  <SearchInput searchInput={searchInput}/>
+                  <SearchBox searchInput={searchInput}/>
 
                   {/* <button 
                         type="button"

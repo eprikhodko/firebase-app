@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import AlbumsContext from "../../context/albums"
 
 import { Link } from "react-router-dom"
@@ -9,19 +9,26 @@ const SearchResults = ({searchInput: {searchQuery}}) => {
 
     const {albumsCollection} = useContext(AlbumsContext)
 
-    // console.log(albumsCollection)
+    // console.log(searchQuery)
 
-    const filteredAlbums = albumsCollection.filter(albumsCollection => {
-        return albumsCollection.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
-    })
+   const [filteredAlbums, setFilteredAlbums] = useState([])
 
+    useEffect(() => {
+
+        if (searchQuery !== "") {
+            const filteredAlbums = albumsCollection.filter(albumsCollection => {
+                return albumsCollection.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
+            })
+            setFilteredAlbums(filteredAlbums)
+            console.log("this is filtered albums from useEffect", filteredAlbums)
+        }
+
+  
+    }, [])
 
     // const checkAlbums = () => {
     //     return albumsCollection.artist.toLowerCase().includes(searchQuery.toLowerCase())
     // }
-
-    // console.log(filteredAlbums)
-
 
     const albumComponents = filteredAlbums.map(album => {
         return(
@@ -57,6 +64,7 @@ const SearchResults = ({searchInput: {searchQuery}}) => {
             <div className="container-uploaded-albums">
                 <h2 className="heading-recently-added-albums">Search results</h2>
                 <div className="container-albums">
+                    {/* <div>Sorry, nothing found</div> */}
                     {albumComponents}
                 </div>
             </div>
