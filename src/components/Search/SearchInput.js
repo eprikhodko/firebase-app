@@ -1,15 +1,21 @@
 import { useState } from "react"
 
-const SearchInput = () => {
+import { useHistory } from "react-router"
 
-    const [searchQuery, setSearchQuery] = useState("")
+const SearchInput = ({searchInput}) => {
+
+    const {searchQuery, setSearchQuery} = searchInput || {}
+
+    const history = useHistory()
 
     const handleSearchSubmit = (event) => {
         event.preventDefault()
+        history.push(`/search`)
         console.log("search this:", searchQuery)
     }
 
     console.log("this is input value:", searchQuery)
+
 
     return (
         <div>

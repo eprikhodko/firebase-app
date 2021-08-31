@@ -12,7 +12,7 @@ import "../styles/Header.css"
 
 import SearchInput from "./Search/SearchInput"
 
-const Header = () => {
+const Header = ({searchInput}) => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
     const currentUser = useContext(UserContext)
@@ -21,23 +21,25 @@ const Header = () => {
 
     const history = useHistory()
     
-    const handleUpdateAlbumsContext = () => {
+    // const handleUpdateAlbumsContext = () => {
 
-        const fetchAlbums = async() => {
-            const albumsCollection = await firebase.firestore().collection("albums")
-            .orderBy("dateCreated", "desc")
-            .get()
-            // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
-           const albums = albumsCollection.docs.map(doc => {
-                return {...doc.data(), albumId: doc.id}
-            })
+    //     const fetchAlbums = async() => {
+    //         const albumsCollection = await firebase.firestore().collection("albums")
+    //         .orderBy("dateCreated", "desc")
+    //         .get()
+    //         // for each album document in "albums" collection in fireStore, return album document and add new property of albumId which value equals to document.id
+    //        const albums = albumsCollection.docs.map(doc => {
+    //             return {...doc.data(), albumId: doc.id}
+    //         })
         
-            setAlbumsCollection(albums)
-        }
+    //         setAlbumsCollection(albums)
+    //     }
     
-        fetchAlbums()
-        console.log("albums context updated")
-    }
+    //     fetchAlbums()
+    //     console.log("albums context updated")
+    // }
+
+    // console.log(value)
 
     return (
         <header className="header">
@@ -53,14 +55,14 @@ const Header = () => {
                         <p className="header__logo">MusicDB</p>
                     </Link>
 
-                  <SearchInput />
+                  <SearchInput searchInput={searchInput}/>
 
-                  <button 
+                  {/* <button 
                         type="button"
                         onClick={handleUpdateAlbumsContext}
                         > 
                         Update Context
-                  </button>
+                  </button> */}
 
                 </div>
                 

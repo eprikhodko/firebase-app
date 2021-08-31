@@ -53,12 +53,20 @@ const App = () => {
 
   console.log("albums fetched by App component")
 
+  const [searchQuery, setSearchQuery] = useState("")
+  const searchInput = {searchQuery, setSearchQuery}
+
+  // console.log(searchInput)
+
   return(
     <UserContext.Provider value = {currentUser}>
         <AlbumsContext.Provider value = {value}>
           <Router>
               <Switch>
-                <Route path={ROUTES.HOME} component ={Home} exact />
+                {/* <Route path={ROUTES.HOME} component ={Home} exact /> */}
+                <Route path={ROUTES.HOME} exact>
+                  <Home searchInput={searchInput}/>
+                </Route>
                 <Route path={ROUTES.LOGIN} component={Login} />
                 <Route path={ROUTES.SIGNUP} component={Signup} />
                 <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
@@ -67,7 +75,9 @@ const App = () => {
                 <Route path={ROUTES.PROFILE} component={Profile} />
                 <Route path={ROUTES.COLLECTION} component={Collection} />
                 <Route path={ROUTES.UPLOADED_BY} component={UploadedBy} />
-                <Route path={ROUTES.SEARCH} component={Search} />
+                <Route path={ROUTES.SEARCH} >
+                  <Search searchInput={searchInput}/>
+                </Route>
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
               </Switch>
         </Router>
