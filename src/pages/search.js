@@ -10,49 +10,19 @@ import Header from "../components/Header"
 import SearchResults from "../components/Search/SearchResults"
 import NothingFoundOnSearch from "../components/Search/NothingFoundOnSearch"
 
-const Search = ({searchInput}) => {
-    
-    const {albumsCollection} = useContext(AlbumsContext)
-    const {searchQuery} = searchInput
+const Search = ({searchInput, nothingIsFound, filtered, submit}) => {
 
-    // console.log("this value was rendered at SearchResults component ", searchQuery )
-
-    // console.log(searchQuery)
-
-    if (searchQuery !== "") {
-        const filteredAlbums = albumsCollection.filter(album => {
-            return album.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
-        })   
-        // console.log(filteredAlbums)
-
-    }
-
-    
-
-    // console.log(filteredAlbums)
-
-    // console.log(albumsCollection)
-    // console.log(searchQuery)
-
-    // const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true)
-    // console.log("is search input is empty?", isSearchInputEmpty)
-
-    // const [searchQuery, setSearchQuery] = useState("")
-    // const value = {searchQuery, setSearchQuery}
-
-    // console.log(value)
-
-    // console.log("this search query is rendered at Search page component, ", searchQuery)
+    // console.log("repeat search?", searchAgain)
 
     return (
         <div>
-            <Header searchInput={searchInput}/>
+            <Header searchInput={searchInput} submit={submit}/>
 
             <h2>this is search page</h2>
 
             {/* if searchQuery is empty, render NothingFoundOnSearch instead of SearchResults */}
             {/* {searchQuery ? <SearchResults searchInput={searchInput}/> : <NothingFoundOnSearch searchInput={searchInput}/>}  */}
-            <SearchResults searchInput={searchInput}/>
+            <SearchResults searchInput={searchInput} nothingIsFound={nothingIsFound} filtered={filtered} submit={submit}/>
             {/* {isSearchInputEmpty ? <NothingFoundOnSearch searchInput={searchInput}/> : <SearchResults searchInput={searchInput}/>}  */}
         </div>
     )

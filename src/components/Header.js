@@ -12,7 +12,7 @@ import "../styles/Header.css"
 
 import SearchBox from "./Search/SearchBox"
 
-const Header = ({searchInput}) => {
+const Header = ({searchInput, repeatSearch, nothingIsFound, albums, submit}) => {
     const {firebase} = useContext(FirebaseContext)
     // const {user} = useContext(UserContext)
     const currentUser = useContext(UserContext)
@@ -20,6 +20,9 @@ const Header = ({searchInput}) => {
     const {setAlbumsCollection} = useContext(AlbumsContext)
 
     const history = useHistory()
+
+    const {submitSearch, setSubmitSearch} = submit
+    const {setSearchQuery} = searchInput
     
     // const handleUpdateAlbumsContext = () => {
 
@@ -41,11 +44,18 @@ const Header = ({searchInput}) => {
 
     // console.log(value)
 
+    const handleHomeClick = () => {
+        console.log("i was clicked by MusicDB word")
+        setSubmitSearch("")
+        console.log(submitSearch)
+        setSearchQuery("")
+    }
+
     return (
         <header className="header">
             <div className="header__container">
                 <div className="header__container-search">
-                    <Link to={ROUTES.HOME} aria-label="Home" className="header__link">
+                    <Link to={ROUTES.HOME} aria-label="Home" className="header__link" onClick={handleHomeClick}>
                         {/* <img 
                             className="container-header__logo" 
                             src={logo}
@@ -55,7 +65,7 @@ const Header = ({searchInput}) => {
                         <p className="header__logo">MusicDB</p>
                     </Link>
 
-                  <SearchBox searchInput={searchInput}/>
+                  <SearchBox searchInput={searchInput} repeatSearch={repeatSearch} nothingIsFound={nothingIsFound} albums={albums} submit={submit}/>
 
                   {/* <button 
                         type="button"

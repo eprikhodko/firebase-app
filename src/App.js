@@ -21,6 +21,7 @@ import Search from "./pages/search"
 import NotFound from "./pages/not-found"
 
 import useAuthListener from "./hooks/useAuthListener"
+import NothingFoundOnSearch from "./components/Search/NothingFoundOnSearch"
 // import useAlbums from "./hooks/useAlbums"
 
 const App = () => {
@@ -53,9 +54,61 @@ const App = () => {
 
   console.log("albums fetched by App component")
 
+
+  /////////////////////////  Search section   ////////////////////////////////
   // this is lifted up state from search input component
   const [searchQuery, setSearchQuery] = useState("")
   const searchInput = {searchQuery, setSearchQuery}
+
+  const [nothingFound, setNothingFound] = useState(false)
+  const [searchAgain, setSearchAgain] = useState(false)
+
+  const nothingIsFound = {nothingFound, setNothingFound}
+  const repeatSearch = {searchAgain, setSearchAgain}
+
+  const [submitSearch, setSubmitSearch] = useState("")
+  const submit = {submitSearch, setSubmitSearch}
+
+  //    const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true)
+  //    const [isNothingFound, setIsNothingFound] = useState(false)
+  
+  const albums = {albumsCollection}
+   
+  // console.log(albums)
+
+  console.log("this is albums collection in App component", albumsCollection)
+
+  const [filteredAlbums, setFilteredAlbums] = useState([])
+  // const {albumsCollection} = useContext(AlbumsContext)
+
+  useEffect(() => {
+
+          if (searchQuery) {
+            const filteredAlbums = albumsCollection.filter(albumsCollection => {
+              return albumsCollection.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
+          })
+          setFilteredAlbums(filteredAlbums)
+          // setNothingFound(false)
+          // setIsSearchInputEmpty(false)
+          console.log("this is filtered albums from useEffect", filteredAlbums)
+          console.log("this is filtered albums length, ", filteredAlbums.length)
+          if (filteredAlbums.length < 1) {
+              console.log("nothing found!")
+              // setIsNothingFound(true)
+              // setNothingFound(true)
+          }
+          // console.log("is nothing found?", isNothingFound)
+          }
+          
+      
+
+
+  }, [submitSearch])
+
+  console.log("this is filtered albums in App component", filteredAlbums)
+  console.log("this is submitted query from search box:", submitSearch)
+
+  const filtered = {filteredAlbums}
 
   return(
     <UserContext.Provider value = {currentUser}>
@@ -65,7 +118,7 @@ const App = () => {
                 {/* <Route path={ROUTES.HOME} component ={Home} exact /> */}
                 {/* https://ui.dev/react-router-v5-pass-props-to-components/ */}
                 <Route path={ROUTES.HOME} exact>
-                  <Home searchInput={searchInput}/>
+                  <Home searchInput={searchInput} nothingIsFound={nothingIsFound} albums={albums} submit={submit}/>
                 </Route>
                 <Route path={ROUTES.LOGIN} component={Login} />
                 <Route path={ROUTES.SIGNUP} component={Signup} />
@@ -79,8 +132,9 @@ const App = () => {
                 <Route path={ROUTES.COLLECTION} component={Collection} />
                 <Route path={ROUTES.UPLOADED_BY} component={UploadedBy} />
                 <Route path={ROUTES.SEARCH} >
-                  <Search searchInput={searchInput}/>
+                  <Search searchInput={searchInput} nothingIsFound={nothingIsFound} filtered={filtered} submit={submit}/>
                 </Route>
+                <Route path={"/nothing-found-on-search"} component={NothingFoundOnSearch}/>
                 <Route path={ROUTES.NOT_FOUND} component={NotFound} />
               </Switch>
         </Router>

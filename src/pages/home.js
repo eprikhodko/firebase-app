@@ -7,11 +7,11 @@ import Header from "../components/Header"
 import RecentlyAddedAlbums from "../components/RecentlyAddedAlbums"
 import FeaturedAlbums from "../components/FeaturedAlbums"
 
-const Home = ({searchInput}) => {
+const Home = ({searchInput, nothingIsFound, albums, submit}) => {
     // console.log(searchInput)
     return(
         <div>
-            <Header searchInput={searchInput}/>
+            <Header searchInput={searchInput} nothingIsFound={nothingIsFound} albums={albums} submit={submit}/>
             <FeaturedAlbums />
             <RecentlyAddedAlbums />
 

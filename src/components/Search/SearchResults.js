@@ -1,36 +1,24 @@
 import { useContext, useEffect, useState } from "react"
 import AlbumsContext from "../../context/albums"
 
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 import NothingFoundOnSearch from "./NothingFoundOnSearch"
 
-const SearchResults = ({searchInput}) => {
+const SearchResults = ({searchInput, nothingIsFound, filtered, submit}) => {
 
     const {searchQuery} = searchInput
+    const {nothingFound, setNothingFound} = nothingIsFound
+    const {filteredAlbums} = filtered
+
+    const history = useHistory()
 
     // console.log("this value was rendered at SearchResults component ", searchQuery )
 
-    const {albumsCollection} = useContext(AlbumsContext)
 
-    // console.log(searchQuery)
+    console.log(filteredAlbums)
 
-   const [filteredAlbums, setFilteredAlbums] = useState([])
-   const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true)
 
-    useEffect(() => {
-
-        if (searchQuery !== "") {
-            const filteredAlbums = albumsCollection.filter(albumsCollection => {
-                return albumsCollection.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
-            })
-            setFilteredAlbums(filteredAlbums)
-            setIsSearchInputEmpty(false)
-            console.log("this is filtered albums from useEffect", filteredAlbums)
-        }
-
-  
-    }, [])
 
     // const checkAlbums = () => {
     //     return albumsCollection.artist.toLowerCase().includes(searchQuery.toLowerCase())
@@ -70,8 +58,7 @@ const SearchResults = ({searchInput}) => {
             <div className="container-uploaded-albums">
                 <h2 className="heading-recently-added-albums">Search results</h2>
                 <div className="container-albums">
-                    {/* <div>Sorry, nothing found</div> */}
-                    {isSearchInputEmpty ? <NothingFoundOnSearch searchInput={searchInput}/> : albumComponents}
+                    {albumComponents.length < 1 ? <NothingFoundOnSearch searchInput={searchInput} submit={submit}/> : albumComponents}
                 </div>
             </div>
         </div> 
