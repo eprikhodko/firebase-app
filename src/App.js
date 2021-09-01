@@ -64,7 +64,6 @@ const App = () => {
   const [searchAgain, setSearchAgain] = useState(false)
 
   const nothingIsFound = {nothingFound, setNothingFound}
-  const repeatSearch = {searchAgain, setSearchAgain}
 
   const [submitSearch, setSubmitSearch] = useState("")
   const submit = {submitSearch, setSubmitSearch}
@@ -127,7 +126,9 @@ const App = () => {
                 <Route path={ROUTES.UPLOAD}> 
                   <Upload searchInput={searchInput} />
                 </Route>
-                <Route path={ROUTES.ALBUM_DETAILS} component={AlbumDetails} />
+                <Route path={ROUTES.ALBUM_DETAILS}>
+                  <AlbumDetails submit={submit} searchInput={searchInput}/>
+                </Route>
                 <Route path={ROUTES.PROFILE} component={Profile} />
                 <Route path={ROUTES.COLLECTION} component={Collection} />
                 <Route path={ROUTES.UPLOADED_BY} component={UploadedBy} />

@@ -21,8 +21,8 @@ const Header = ({searchInput, repeatSearch, nothingIsFound, albums, submit}) => 
 
     const history = useHistory()
 
-    const {submitSearch, setSubmitSearch} = submit
-    const {setSearchQuery} = searchInput
+    const {submitSearch, setSubmitSearch} = submit || {}    
+    const {setSearchQuery} = searchInput || {}
     
     // const handleUpdateAlbumsContext = () => {
 

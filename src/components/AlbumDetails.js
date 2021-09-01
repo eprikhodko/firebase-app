@@ -11,7 +11,9 @@ import Header from "../components/Header"
 
 import "../styles/AlbumDetails.css"
 
-const AlbumDetails = () => {
+const AlbumDetails = ({submit, searchInput}) => {
+
+    console.log(submit)
 
     const currentUser = useContext(UserContext)
     // const currentUser = null
@@ -205,7 +207,7 @@ const AlbumDetails = () => {
 
     return(
         <div>
-            <Header />
+            <Header submit={submit} searchInput={searchInput}/>
             <div className="container-album">
                 <img 
                     src={albumCover} 
