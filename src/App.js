@@ -70,7 +70,10 @@ const App = () => {
                 <Route path={ROUTES.LOGIN} component={Login} />
                 <Route path={ROUTES.SIGNUP} component={Signup} />
                 <Route path={ROUTES.BASIC_FILE_UPLOAD} component={BasicFileUpload} />
-                <Route path={ROUTES.UPLOAD} component={Upload} />
+                {/* <Route path={ROUTES.UPLOAD} component={Upload} /> */}
+                <Route path={ROUTES.UPLOAD}> 
+                  <Upload searchInput={searchInput} />
+                </Route>
                 <Route path={ROUTES.ALBUM_DETAILS} component={AlbumDetails} />
                 <Route path={ROUTES.PROFILE} component={Profile} />
                 <Route path={ROUTES.COLLECTION} component={Collection} />

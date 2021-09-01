@@ -7,10 +7,12 @@ import AlbumsContext from "../context/albums"
 
 import Header from "../components/Header"
 import NavbarUserProfile from "../components/NavbarUserProfile"
+import SearchBox from "../components/Search/SearchBox"
 
 import "../styles/upload.css"
+import Search from "./search"
 
-const Upload = () => {
+const Upload = ({searchInput}) => {
 
   const {firebase} = useContext(FirebaseContext)
   const {setAlbumsCollection} = useContext(AlbumsContext)
@@ -169,6 +171,7 @@ const Upload = () => {
             <div className="container-upload">
 
               <NavbarUserProfile />
+              <SearchBox searchInput={searchInput}/>
 
                 <h2 className="heading-upload-album">Upload album to the database</h2>
                 <form onSubmit={handleSubmit} className="form-upload">  

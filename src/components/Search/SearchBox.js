@@ -13,13 +13,13 @@ const SearchBox = ({searchInput}) => {
 
     const handleSearchSubmit = (event) => {
         event.preventDefault()
-        // if (searchQuery !== "") {
-        //     history.push(`/search`)
-        // } else {
-        //     history.push("/not-found")
-        // }
+        if (searchQuery !== "") {
+            history.push(`/search`)
+        } else {
+            history.push("/upload")
+        }
 
-        history.push("/search")
+        // history.push(`/search/${searchQuery}`)
     }
 
     console.log("this is input value:", searchQuery)

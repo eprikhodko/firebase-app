@@ -3,7 +3,11 @@ import AlbumsContext from "../../context/albums"
 
 import { Link } from "react-router-dom"
 
-const SearchResults = ({searchInput: {searchQuery}}) => {
+import NothingFoundOnSearch from "./NothingFoundOnSearch"
+
+const SearchResults = ({searchInput}) => {
+
+    const {searchQuery} = searchInput
 
     // console.log("this value was rendered at SearchResults component ", searchQuery )
 
@@ -12,6 +16,7 @@ const SearchResults = ({searchInput: {searchQuery}}) => {
     // console.log(searchQuery)
 
    const [filteredAlbums, setFilteredAlbums] = useState([])
+   const [isSearchInputEmpty, setIsSearchInputEmpty] = useState(true)
 
     useEffect(() => {
 
@@ -20,6 +25,7 @@ const SearchResults = ({searchInput: {searchQuery}}) => {
                 return albumsCollection.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
             })
             setFilteredAlbums(filteredAlbums)
+            setIsSearchInputEmpty(false)
             console.log("this is filtered albums from useEffect", filteredAlbums)
         }
 
@@ -65,7 +71,7 @@ const SearchResults = ({searchInput: {searchQuery}}) => {
                 <h2 className="heading-recently-added-albums">Search results</h2>
                 <div className="container-albums">
                     {/* <div>Sorry, nothing found</div> */}
-                    {albumComponents}
+                    {isSearchInputEmpty ? <NothingFoundOnSearch searchInput={searchInput}/> : albumComponents}
                 </div>
             </div>
         </div> 
