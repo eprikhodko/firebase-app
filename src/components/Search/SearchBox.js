@@ -1,7 +1,3 @@
-import { useState, useEffect, useContext } from "react"
-
-import AlbumsContext from "../../context/albums"
-
 import { useHistory } from "react-router"
 import * as ROUTES from "../../constants/routes"
 
@@ -17,7 +13,7 @@ const SearchBox = ({searchInput, submit}) => {
     const handleSearchSubmit = (event) => {
         event.preventDefault()
         setSubmitSearch(searchQuery)
-        history.push(`/search`)
+        history.push(ROUTES.SEARCH)
         // if (searchQuery !== "") {
         //     history.push(`/search`)
         // } else {
