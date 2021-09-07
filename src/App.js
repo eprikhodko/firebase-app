@@ -67,21 +67,52 @@ const App = () => {
   const [filteredAlbums, setFilteredAlbums] = useState([])
   const filtered = {filteredAlbums}
 
+  const filterByAlbumTitle = () => {
+    return albumsCollection.filter(album => {
+      return album.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
+    })
+  }
+
+  const filterByAlbumArtist = () => {
+    return albumsCollection.filter(album => {
+      return album.artist.toLowerCase().includes(searchQuery.toLowerCase())
+    })
+  }
+
+  const filterByAlbumYear = () => {
+    return albumsCollection.filter(album => {
+      return album.year.includes(searchQuery)
+    })
+  }
+
+  const filterAlbums = () => {
+    if (searchQuery) {
+      // filter albums collection from firestore for value from the search input
+      const filteredByAlbumTitle = filterByAlbumTitle()
+      const filteredByAlbumArtist = filterByAlbumArtist()
+      const filteredByAlbumYear = filterByAlbumYear()
+      // merge filtered albums
+      const mergedAlbums = filteredByAlbumTitle.concat(filteredByAlbumArtist, filteredByAlbumYear)
+      console.log("this is merged albums", mergedAlbums)
+      // remove duplicates
+      const uniqueAlbums = [...mergedAlbums.reduce((map, album) => map.set(album.albumId, album), new Map()).values()]
+      console.log("this is unique albums", uniqueAlbums)
+      setFilteredAlbums(uniqueAlbums)
+
+      // console.log("this is filtered by album title albums from useEffect", filteredAlbums)
+
+      // if (filteredAlbums.length < 1) {
+      //     console.log("nothing found!")
+      // }
+    }
+  }
+
+  // console.log(filterAlbums())
+
   useEffect(() => {
 
-          if (searchQuery) {
-            const filteredAlbums = albumsCollection.filter(albumsCollection => {
-              return albumsCollection.albumTitle.toLowerCase().includes(searchQuery.toLowerCase())
-            })
-            setFilteredAlbums(filteredAlbums)
+          filterAlbums()
 
-            console.log("this is filtered albums from useEffect", filteredAlbums)
-
-            if (filteredAlbums.length < 1) {
-                console.log("nothing found!")
-            }
-          }
-          
   }, [submitSearch])
 
   console.log("this is filtered albums in App component", filteredAlbums)
